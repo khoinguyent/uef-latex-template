@@ -1,21 +1,42 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%UEF FORMAT%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%basic layout
 \documentclass[a4paper, 12pt]{article}
-% Actually use characters like ö and ä in output, not accented a.
+% Allow the usage of graphics (.png, .jpg)
+\usepackage[pdftex]{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{apacite}
 \usepackage[T1]{fontenc}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\renewcommand{\ALG@name}{Compute Distance}
+\renewcommand{\thealgorithm}{}
+\makeatother
+
 % set line spacing
 \usepackage{setspace}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{2ex}
 \linespread{1.3}
-% Allow the usage of graphics (.png, .jpg)
-\usepackage[pdftex]{graphicx}
+
+% caption
+\usepackage{caption} 
+\captionsetup[table]{skip=10pt}
+
+\usepackage{tocloft} % for list of equations
+% define list of equations
+\newcommand{\listequationsname}{\Large{List of Equations}}
+\newlistof{myequations}{equ}{\listequationsname}
+\newcommand{\myequations}[1]{
+   \addcontentsline{equ}{myequations}{\protect\numberline{\theequation}#1}
+}
+\setlength{\cftmyequationsnumwidth}{2.3em}
+\setlength{\cftmyequationsindent}{1.5em}
+
 % Comment the following line to NOT allow the usage of umlauts
 \usepackage[utf8]{inputenc}
-% Last language in list is default for document. Set to other languages using eg. \begin{otherlanguage}{finnish}
-\usepackage[finnish,english]{babel}
-% font
-\usepackage{times}
 %custom margins
 \usepackage[]{vmargin}
 \setpapersize{A4}	
@@ -24,6 +45,8 @@
 \usepackage{url}
 % Support long tables
 \usepackage[]{longtable}
+\usepackage{ltablex}
+\usepackage{adjustbox}
 %Pretty bibliography in UEF format
 \usepackage{natbib}
 % verbatim code listings
@@ -49,11 +72,57 @@
 
 
 \section{Introduction}
-This template works perfectly in Verbosus, and simplifies working in \LaTeX . Just upload the tex files and pdf files appropriately, and copy and paste the sample references below into the bibliography.
+Sign Language, any methods of communicating by bodily motions, particularly with hands and arms, that is utilized when verbal communication is either difficult or undesirable. Sign language can consist of a series of overly-exaggerated facial expressions, shrugs, or hand gestures; or it can be a fine and delicate mix of hand signals that are complemented by facial expressions and words spelt out using a manual alphabet. When a deaf person or someone speaking a different language is communicating with someone who is hearing, using sign language can help connect the parties. \citep{signlanguagedefinition2020}. The public has neither the time nor the patience to learn sign language, which is complicated and time-consuming to learn and practice. Additionally, there are also many language and culture-specific \citep{holtz2014reading} (e.g Germany, Japanese) constraints which will hinder the widespread adoption of sign language.
+Significant advances in deep learning (DL) and improvements in device capabilities, such as computation power, memory capacity, power usage, sensor resolution, and optics, have improved the performance and cost-effectiveness of vision-based applications, allowing them to spread more quickly in the market place.
+For this reason, it is interesting to examine sign language recognition (SLR), which automatically translates sign language and aids deaf-mute individuals in communicating with others in their life
 
-\subsection{Predecessor}
+Back to the history of 90s, Yann LeCun et al. published "Gradient-Based Learning Applied to Document Recognition", which is widely considered to be the most popular AI article from the era. This paper was the first modern application of convolutional neural networks to be developed.
+Since then, more and more sophisticated models trained on ever-larger datasets have been built using the convenient approach of convolutional neural networks. Especially in the field of Computer Vision - Human-based activity recognition, there are many methods can be applied to solve the problem, from traditional convolutional neural networks such as CNN-RNN, CNN-LSTM to RestNetCRNN, Conv3D and state-of-the-art networks e.g Pose-TGCN, I3D.
+Inheriting the idea of using two-stream I3D network, which is based 2D ConvNet \citep{carreira2017quo}, presented by Carreira and Zisserman, this project is re-implement the model with a slightly modification inside. It might not be better when comparing with other models, however during the project, I have got many experience and broaden my knowledge on the field of Deep Learning. 
 
-The template was developed sources provided at http://www.uef.fi/en/cs/latex-pohja
+\subsection{Problem}
+As same as other human-based activity recognition, SRL also shares some common problems such as background clutter, lightning or lightning changing in a video, motion blur, angle of camera, changing scale. 
+SRL, on the other hand, is a more difficult task than ordinary action recognition. Firstly, sign language relies on a combination of global body movement and subtle hand/arm gesture. Additionally, depending on how many times they are repeated, same gestures might have different meanings. SRL might be more difficult to examine because of different states of motions and signers such as localism, gesture speed, preferred hand or physical form. Finally, it is also expensive to collect additional data from many signers even though it is desirable \citep{jiang2021skeleton}.
+
+As described above, the datasets that uses for training SLR are limited, even the number of samples inside each dataset. The table below describes some datasets that normally use for researching.
+
+\begin{table}[ht!]
+    \centering
+    \def\arraystretch{1}%
+    \caption{Sign Language Datasets.}
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{|l|l|l|l|l|l|}
+            \hline \textbf{Dataset} & \textbf{Language} & \textbf{Classes} & \textbf{Samples} & \textbf{Data Type} & \textbf{Language Level} \\
+            \hline CSL Dataset I & Chinese & 500 & 125,000 & Video \& Depth from Kinect & Isolated \\
+            \hline CSL Dataset II & Chinese & 100 & 25,000 & Videos \& Depth from Kinect & Continuous \\
+            \hline RWTH-PHOENIX-Weather 2014 & German & 1,081 & 6,841 & Videos & Continuous \\
+            \hline RWTH-PHOENIX-Weather 2014 T & German & 1,066 & 8,257 & Videos & Continuous \\
+            \hline ASLLVD & American & 3,300 & 9,800 & Videos(multiple angles) & Isolated \\
+            \hline ASLLVD-Skeleton & American & 3,300 & 9,800 & Skeleton & Isolated \\
+            \hline SIGNUM & German & 450 & 33,210 & Videos & Continuous \\
+            \hline DGS Kinect 40 & German & 40 & 3,000 & Videos(multiple angles) & Isolated \\
+            \hline DEVISIGN-G & Chinese & 36 & 432 & Videos & Isolated \\
+            \hline DEVISIGN-D & Chinese & 500 & 6,000 & Videos & Isolated \\
+            \hline DEVISIGN-L & Chinese & 2000 & 24,000 & Videos & Isolated \\
+            \hline LSA64 & Argentinian & 64 & 3,200 & Videos & Isolated \\
+            \hline GSL isol. & Greek & 310 & 40,785 & Videos \& Depth from RealSense & Isolated \\
+            \hline GSL SD & Greek & 310 & 10,290 & Videos \& Depth from RealSense & Continuous \\
+            \hline GSL SI & Greek & 310 & 10,290 & Videos \& Depth from RealSense & Continuous \\
+            \hline IIITA -ROBITA & Indian & 23 & 605 & Videos & Isolated \\
+            \hline PSL Kinect & Polish & 30 & 300 & Videos \& Depth from Kinect & Isolated \\
+            \hline PSL ToF & Polish & 84 & 1,680 & Videos \& Depth from ToF camera & Isolated \\
+            \hline BUHMAP-DB & Turkish & 8 & 440 & Videos & Isolated \\
+            \hline LSE-Sign & Spanish & 2,400 & 2,400 & Videos & Isolated \\
+            \hline Purdue RVL-SLLL & American & 39 & 546 & Videos & Isolated \\
+            \hline RWTH-BOSTON-50 & American & 50 & 483 & Videos(multiple angles) & Isolated \\
+            \hline RWTH-BOSTON-104 & American & 104 & 201 & Videos(multiple angles) & Continuous \\
+            \hline RWTH-BOSTON-400 & American & 400 & 843 & Videos & Continuous \\
+            \hline WLASL & American & 2,000 & 21,083 & Videos & Isolated \\
+            \hline
+        \end{tabular}
+    }
+    \label{table:1}
+\end{table}
 
 \section{Making a Bibliography}
 Copy and paste the following into Verbosus' bibliography page, then make citations, like John Smith did \cite{smith99} under instruction of Jane Doe \cite{doe95}
@@ -80,7 +149,8 @@ Copy and paste the following into Verbosus' bibliography page, then make citatio
 % Two common styles, pick one or find alternate bst.
 % \citet{john} is like John (1985); \citep{jane} is like (Jane 1985)
 %\bibliographystyle{IEEEtranN} % Like this (Jane 1995)
-\bibliographystyle{plain} % Like this [6] 
+%\bibliographystyle{plain} % Like this [6] 
+\bibliographystyle{apacite}
 \bibliography{document}
 
 \end{document}
