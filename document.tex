@@ -8,6 +8,7 @@
 \usepackage{amsmath}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage{subcaption}
 
 \makeatletter
 \def\BState{\State\hskip-\ALG@thistlm}
@@ -125,6 +126,35 @@ As described above, the datasets that uses for training SLR are limited, even th
 \end{table}
 
 Time segmentation is another issue for SLR as it is difficult to distinguish different kinds of sign language while signers make gestures continuously to describe a phrase or a sentence \citep{xiao2020multi}.
+Word-level sign recognition, an integral part of comprehending sign language phrases and sentences, is also extremely difficult task itself:
+\begin{itemize}
+    \item The meaning of signals is primarily determined by the mix of bhand actions, body motions and head positions, and small variations in these elements can result in a variety of interpretations.
+    \item With the same gesture, depend on the natural languages and context, they might have different meaning. It is also possible for nouns and verbs from the same lemma to share the same sign. These nuances are not effectively reflected by the small-scale datasets that are currently available (Figure 1) \citep{li2020word}.
+    \item The number of signs that are used on daily basis is enormous, it could be thousands. In comparison, tasks such as gesture and action recognition have just had a few hundred catogries. The scalability of recognition algorithms is significantly hampered as a result.
+\end{itemize}
+
+\begin{figure}[hbt!]
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{fig2a.png}
+        \caption{\textbf{"Scream"} is performed slightly different by different signers}
+        \label{Figure 1.a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{fig2b.png}
+        \caption{The verb \textbf{"Wish"} (top) and the adjective \textbf{"Hungry"} (bottom) have same gesture}
+        \label{Figure 1.b}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{fig2c.png}
+        \caption{\textbf{"Rice"} (top) and \textbf{"Soup"} (bottom) have same gesture}
+        \label{Figure 1.c}
+    \end{subfigure}
+    \caption{Common occurrence of ambiguity and variation signing}
+    \label{Figure 1}
+\end{figure}
 
 \section{Making a Bibliography}
 Copy and paste the following into Verbosus' bibliography page, then make citations, like John Smith did under instruction of Jane Doe
