@@ -130,7 +130,7 @@ Word-level sign recognition, an integral part of comprehending sign language phr
 \begin{itemize}
     \item The meaning of signals is primarily determined by the mix of bhand actions, body motions and head positions, and small variations in these elements can result in a variety of interpretations.
     \item With the same gesture, depend on the natural languages and context, they might have different meaning. It is also possible for nouns and verbs from the same lemma to share the same sign. These nuances are not effectively reflected by the small-scale datasets that are currently available (Figure 1) \citep{li2020word}.
-    \item The number of signs that are used on daily basis is enormous, it could be thousands. In comparison, tasks such as gesture and action recognition have just had a few hundred catogries. The scalability of recognition algorithms is significantly hampered as a result.
+    \item The number of signs that are used on daily basis is enormous, it could be thousands. In comparison, tasks such as gesture and action recognition have just had a few hundred categories. The scalability of recognition algorithms is significantly hampered as a result.
 \end{itemize}
 
 \begin{figure}[hbt!]
@@ -155,6 +155,13 @@ Word-level sign recognition, an integral part of comprehending sign language phr
     \caption{Common occurrence of ambiguity and variation signing}
     \label{Figure 1}
 \end{figure}
+
+\subsection{Thesis scope and target}
+In fact, the researching of SLR, including isolated (word-level) and continuous (phrase or sentences), has yielded significant results and developed rapidly in recent years \Citep*{lim2019isolated}\Citep*{li2018deep}\Citep*{mercanoglu2021chalearn}.
+So this project aims to understand the architecture of I3D model, focuses on the methodology of training, evaluating the network with given dataset. A further objective of the project is getting familiar with libraries and frameworks of Deep Learning which is built for Python environment, and also other related topics such as image processing, data labelling, development tools e.g Google Colab, Anaconda, Jupyter Notebook.
+Regarding data and dataset, the project gave a comprehensive overview of organizing data, loading, splitting data for training and testing purpose.
+
+Finally, in terms of the topic's aim, this thesis primarily focuses on enhancing the accuracy of the dataset with the two-stream I3D network. Because of the limitation of facilities, such as hardware, and time-consuming of training process, the project only used the WLASL dataset.
 
 \section{Making a Bibliography}
 Copy and paste the following into Verbosus' bibliography page, then make citations, like John Smith did under instruction of Jane Doe
