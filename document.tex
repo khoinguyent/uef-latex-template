@@ -165,10 +165,24 @@ Finally, in terms of the topic's aim, this thesis primarily focuses on enhancing
 In order to reduce the consumption of training time, as well as to test the effectiveness of I3D network, the dataset is divided into many sub-datasets which have 100 classes, 300 classes, 1000 classes and 2000 classes.
 
 \section{Model}
-\subsection{General algorithm for video classification }
-A video is a collection of multi images which are represented by sequential. Therefore, the main idea of clarifying an action inside a video is analyzing frame by frame. In details, the general procedure of video recognition \citep{sivic2003video}\citep{niebles2010modeling} contains three key stages. 
+\subsection{Methodology of video classification and CNNs}
+A video is a collection of multi images which are represented by sequential. Therefore, the main idea of clarifying an action or object inside a video is analyzing frame by frame. In details, the general procedure of video recognition \citep{sivic2003video}\citep{niebles2010modeling} contains three key stages. 
 The video is first divided into regions \citep{liu2009recognizing} based on the places that are easy to characterize in visual terms. This is done by either sampling regions densely \citep{wang2013action} or, if there are few areas of interest \citep{laptev2005space}, by using a sparse sampling technique. 
 In the next step, the characteristics are merged into a video level description with defined size. One common method is to train a K-means dictionary and then evaluate all the features. This allows to gather visual words during the duration of the video and then arrange them into histograms of various spatio-temporal positions and extents \citep{karpathy2014large}\citep{laptev2008learning}.
+Finally, a classifier (such as an SVM) is trained to discriminate between the classes of interest with the resulting "bag of words.".
+
+CNN, a single neural network which emulates the process of human brain \citep{lecun1998gradient} offer an approach that combines 3 phases into an end-to-end training from the raw value of pixels to the output classifiers. By using restricted connection across layers (local filters), parameter sharing (convolutions), and specific local invariance-building neurons (max pooling), the spatial structure of pictures is specifically exploited. Recently with the outstanding of GPU, CNNs can now scale the networks with millions variables, resulting in significant developments in object recognition \citep{girshick2014rich}, image classification \citep{krizhevsky2017imagenet}, scene annotation. The use of CNNs has piqued the interest of many in the computer vision research community \citep{zha2015exploiting}, and it has been demonstrated that CNN-based methods can reach state-of-the-art performance on various of complex image datasets \citep{sharif2014cnn}.
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=1\textwidth]{Video_classification_and_human_activity_recognition.jpg}
+    \caption{An example of video classification}
+    \label{Figure 2}
+\end{figure}
+
+\subsection{Some models to solve video recognition problems}
+\subsubsection{CNN-LSTM}
+
 
 \newpage
 
@@ -176,6 +190,7 @@ In the next step, the characteristics are merged into a video level description 
 % \citet{john} is like John (1985); \citep{jane} is like (Jane 1985)
 %\bibliographystyle{IEEEtranN} % Like this (Jane 1995)
 %\bibliographystyle{plain} % Like this [6] 
+\newpage
 \bibliographystyle{apacite}
 \bibliography{document}
 
