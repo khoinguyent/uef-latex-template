@@ -161,27 +161,14 @@ In fact, the researching of SLR, including isolated (word-level) and continuous 
 So this project aims to understand the architecture of I3D model, focuses on the methodology of training, evaluating the network with given dataset. A further objective of the project is getting familiar with libraries and frameworks of Deep Learning which is built for Python environment, and also other related topics such as image processing, data labelling, development tools e.g Google Colab, Anaconda, Jupyter Notebook.
 Regarding data and dataset, the project gave a comprehensive overview of organizing data, loading, splitting data for training and testing purpose.
 
-Finally, in terms of the topic's aim, this thesis primarily focuses on enhancing the accuracy of the dataset with the two-stream I3D network. Because of the limitation of facilities, such as hardware, and time-consuming of training process, the project only used the WLASL dataset.
+Finally, in terms of the topic's aim, this thesis primarily focuses on enhancing the accuracy of the dataset with the two-stream I3D network. Because of the limitation of facilities, such as hardware, and time-consuming of training process, the project only used the WLASL dataset. 
+In order to reduce the consumption of training time, as well as to test the effectiveness of I3D network, the dataset is divided into many sub-datasets which have 100 classes, 300 classes, 1000 classes and 2000 classes.
 
-\section{Making a Bibliography}
-Copy and paste the following into Verbosus' bibliography page, then make citations, like John Smith did under instruction of Jane Doe
-
-\begin{lstlisting}[frame=single, columns=fullflexible, basicstyle=\ttfamily]
-@article{doe95,
- author="Jane Doe",
- title="Another Article",
- journal="Journal of Journaling",
- year="1995"
-}
-
-@book{smith99,
- author="John Smith",
- title="Writing nicely",
- publisher="Incredible Books Inc",
- year="1999"
-}
-\end{lstlisting}
-
+\section{Model}
+\subsection{General algorithm for video classification }
+A video is a collection of multi images which are represented by sequential. Therefore, the main idea of clarifying an action inside a video is analyzing frame by frame. In details, the general procedure of video recognition \citep{sivic2003video}\citep{niebles2010modeling} contains three key stages. 
+The video is first divided into regions \citep{liu2009recognizing} based on the places that are easy to characterize in visual terms. This is done by either sampling regions densely \citep{wang2013action} or, if there are few areas of interest \citep{laptev2005space}, by using a sparse sampling technique. 
+In the next step, the characteristics are merged into a video level description with defined size. One common method is to train a K-means dictionary and then evaluate all the features. This allows to gather visual words during the duration of the video and then arrange them into histograms of various spatio-temporal positions and extents \citep{karpathy2014large}\citep{laptev2008learning}.
 
 \newpage
 
