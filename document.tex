@@ -157,7 +157,7 @@ Word-level sign recognition, an integral part of comprehending sign language phr
 \end{figure}
 
 \subsection{Thesis scope and target}
-In fact, the researching of SLR, including isolated (word-level) and continuous (phrase or sentences), has yielded significant results and developed rapidly in recent years \Citep*{lim2019isolated}\Citep*{li2018deep}\Citep*{mercanoglu2021chalearn}.
+In fact, the researching of SLR, including isolated (word-level) and continuous (phrase or sentences), has yielded significant results and developed rapidly in recent years \Citep{lim2019isolated,li2018deep,mercanoglu2021chalearn}.
 So this project aims to understand the architecture of I3D model, focuses on the methodology of training, evaluating the network with given dataset. A further objective of the project is getting familiar with libraries and frameworks of Deep Learning which is built for Python environment, and also other related topics such as image processing, data labelling, development tools e.g Google Colab, Anaconda, Jupyter Notebook.
 Regarding data and dataset, the project gave a comprehensive overview of organizing data, loading, splitting data for training and testing purpose.
 
@@ -166,9 +166,9 @@ In order to reduce the consumption of training time, as well as to test the effe
 
 \section{Model}
 \subsection{Methodology of video classification and CNNs}
-A video is a collection of multi images which are represented by sequential. Therefore, the main idea of clarifying an action or object inside a video is analyzing frame by frame. In details, the general procedure of video recognition \citep{sivic2003video}\citep{niebles2010modeling} contains three key stages. 
+A video is a collection of multi images which are represented by sequential. Therefore, the main idea of clarifying an action or object inside a video is analyzing frame by frame. In details, the general procedure of video recognition \citep{sivic2003video,niebles2010modeling} contains three key stages. 
 The video is first divided into regions \citep{liu2009recognizing} based on the places that are easy to characterize in visual terms. This is done by either sampling regions densely \citep{wang2013action} or, if there are few areas of interest \citep{laptev2005space}, by using a sparse sampling technique. 
-In the next step, the characteristics are merged into a video level description with defined size. One common method is to train a K-means dictionary and then evaluate all the features. This allows to gather visual words during the duration of the video and then arrange them into histograms of various spatio-temporal positions and extents \citep{karpathy2014large}\citep{laptev2008learning}.
+In the next step, the characteristics are merged into a video level description with defined size. One common method is to train a K-means dictionary and then evaluate all the features. This allows to gather visual words during the duration of the video and then arrange them into histograms of various spatio-temporal positions and extents \citep{karpathy2014large,laptev2008learning}.
 Finally, a classifier (such as an SVM) is trained to discriminate between the classes of interest with the resulting "bag of words.".
 
 CNN, a single neural network which emulates the process of human brain \citep{lecun1998gradient} offer an approach that combines 3 phases into an end-to-end training from the raw value of pixels to the output classifiers. By using restricted connection across layers (local filters), parameter sharing (convolutions), and specific local invariance-building neurons (max pooling), the spatial structure of pictures is specifically exploited. Recently with the outstanding of GPU, CNNs can now scale the networks with millions variables, resulting in significant developments in object recognition \citep{girshick2014rich}, image classification \citep{krizhevsky2017imagenet}, scene annotation. The use of CNNs has piqued the interest of many in the computer vision research community \citep{zha2015exploiting}, and it has been demonstrated that CNN-based methods can reach state-of-the-art performance on various of complex image datasets \citep{sharif2014cnn}.
@@ -193,7 +193,39 @@ LSTM network and CNNs have been researched widely but independently previously. 
 
 In the model of ConvNet-LSTM, features are extracted separately from each frame of a video through a CNN network \citep{karpathy2014large}. Then they are feeded into a LSTM layer \citep{yue2015beyond,donahue2015long}, which is capable of providing stage encoding and temporal ordering. Finally, a fully connected layer is put on the top for classifer.
 
-\subsubsection{3DConvNet}
+\subsubsection{3D ConvNet}
+Extended from 2D ConvNet, in which convolutions exclusively generate features based on spatial dimensions, 3D ConvNet computes features in the spatial as well as temporal dimensions. Convolution using a 3D kernel is done by convolving a cube of several frames to get a 3D result. This architecture has the additional advantage of making the feature maps in the convolution layer linked to several contiguous frames in the preceding layer, which aids in the capture of motion information \citep{Ji20133DCN}. The use of 3dConvNet have been exploited in many researchs \citep{tran2015learning,taylor2010convolutional}. 
+
+With \textit{\begin{math} c \times l \times h \times w \end{math}} size of a video (c is a number of channel, l is a number of frames, h and w are corresponding to height and width of each frame),
+kernel size for 3D convolution and pooling are denoted by the notation \textit{\begin{math}d \times k \times k\end{math}}, where \textit{d} is the kernel temporal depth and \textit{k} is kernel spatial size, 3D ConvNet networks are programmed to accept video clips as inputs and predict the class label that correlate to \textit{n} classes based on datasets \citep{tran2015learning}.
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=0.75\textwidth]{3D ConvNet Model.png}
+    \caption{An example of 3D ConvNet with RGB video as input}
+    \label{Figure 4}
+\end{figure}
+
+\subsubsection{Two-stream network}
+Introduced by Simonyan and Zisserman et al, a model which uses an individual RGB frame and an external n-frame optical flow, was shown extremely high performance on benchmarks, while also being efficient to train and test \citep{simonyan2014two}. In details, a video data is separeted into two streams, spatial stream and temporal stream. The spatial stream can spot motion in static frames, whereas the temporal stream is trained to perceive motion in images as optical flows, both of them are developed with ConvNet \citep{simonyan2014two}.
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=0.75\textwidth]{Two-stream ConvNet Model.png}
+    \caption{Two-stream 3D ConvNet model}
+    \label{Figure 5}
+\end{figure}
+
+The result shown by Simonyan and Zisserman indicates that using optical flow for training a temporal dimension is outperform than training on static frames \citep{karpathy2014large}.
+
+An extended version of two-stream network, 3D-Fused Two-Stream, is using a 3D ConvNet which can learn patterns related to temporal directly \citep{carreira2017quo}. The model of 3d-Fused Two-Stream is as Figure 6.
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=0.75\textwidth]{3D-Fused Two-stream.png}
+    \caption{3D-Fused Two-Stream}
+    \label{Figure 6}
+\end{figure}
 
 \newpage
 
