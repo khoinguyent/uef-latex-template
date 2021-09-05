@@ -181,8 +181,19 @@ CNN, a single neural network which emulates the process of human brain \citep{le
 \end{figure}
 
 \subsection{Some models to solve video recognition problems}
-\subsubsection{CNN-LSTM}
+\subsubsection{ConvNet-LSTM}
+LSTM network and CNNs have been researched widely but independently previously. While CNNs are able to give spatially specific information, LSTM networks are good at producing temporally comprehensive results \citep{mutegeki2020cnn}. As a result, the use of CNN-LSTM networks is extensively employed for time series data, and is particularly useful for video datasets that have a time dimension.
 
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=0.75\textwidth]{CNN-LSTM.png}
+    \caption{CNN-LSTM model}
+    \label{Figure 3}
+\end{figure}
+
+In the model of ConvNet-LSTM, features are extracted separately from each frame of a video through a CNN network \citep{karpathy2014large}. Then they are feeded into a LSTM layer \citep{yue2015beyond,donahue2015long}, which is capable of providing stage encoding and temporal ordering. Finally, a fully connected layer is put on the top for classifer.
+
+\subsubsection{3DConvNet}
 
 \newpage
 
