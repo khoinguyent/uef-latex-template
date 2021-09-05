@@ -227,6 +227,32 @@ An extended version of two-stream network, 3D-Fused Two-Stream, is using a 3D Co
     \label{Figure 6}
 \end{figure}
 
+\subsection{Model in this study}
+With the extendable 2D ConvNet to 3D ConvNet where time dimensions can be added to perform the result, a coming up model is that use two streams of raw images and also optical flow frames. Thus, the temporal patterns is not only studied during the optical flow but also with RGB inputs. As a result, the performance is improved significantly compared with using only RGB stream \citep{carreira2017quo}.
+
+In the method that Zisserman and Carreira proposed, 2 streams are trained independently but the prediction of them are computed as average of 2-stream predictions in test phase. In constrast, in this study, RGB stream and Optical Flow Stream are trained as the same time, and the outputs of them are combined and fed into simple classifier model
+
+\begin{figure}[hbt!]
+    \centering
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.6\textwidth]{2-stream I3D Model.png}
+        \caption{2-stream 3D ConvNet by Zisserman and Carreira \citep{carreira2017quo}}
+        \label{Figure 7.a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.6\textwidth]{Modified 2-stream I3D Model.png}
+        \caption{Modified 2-stream I3D in this thesis}
+        \label{Figure 7.b}
+    \end{subfigure}
+    \caption{2 models of I3D}
+    \label{Figure 7}
+\end{figure}
+
+
+
 \newpage
 
 % Two common styles, pick one or find alternate bst.
