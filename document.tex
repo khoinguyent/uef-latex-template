@@ -9,6 +9,7 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{subcaption}
+\usepackage{float}
 
 \makeatletter
 \def\BState{\State\hskip-\ALG@thistlm}
@@ -133,7 +134,7 @@ Word-level sign recognition, an integral part of comprehending sign language phr
     \item The number of signs that are used on daily basis is enormous, it could be thousands. In comparison, tasks such as gesture and action recognition have just had a few hundred categories. The scalability of recognition algorithms is significantly hampered as a result.
 \end{itemize}
 
-\begin{figure}[hbt!]
+\begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.3\textwidth}
         \includegraphics[width=\textwidth]{fig2a.png}
@@ -173,7 +174,7 @@ Finally, a classifier (such as an SVM) is trained to discriminate between the cl
 
 CNN, a single neural network which emulates the process of human brain \citep{lecun1998gradient} offer an approach that combines 3 phases into an end-to-end training from the raw value of pixels to the output classifiers. By using restricted connection across layers (local filters), parameter sharing (convolutions), and specific local invariance-building neurons (max pooling), the spatial structure of pictures is specifically exploited. Recently with the outstanding of GPU, CNNs can now scale the networks with millions variables, resulting in significant developments in object recognition \citep{girshick2014rich}, image classification \citep{krizhevsky2017imagenet}, scene annotation. The use of CNNs has piqued the interest of many in the computer vision research community \citep{zha2015exploiting}, and it has been demonstrated that CNN-based methods can reach state-of-the-art performance on various of complex image datasets \citep{sharif2014cnn}.
 
-\begin{figure}[hbt!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{Video_classification_and_human_activity_recognition.jpg}
     \caption{An example of video classification}
@@ -184,7 +185,7 @@ CNN, a single neural network which emulates the process of human brain \citep{le
 \subsubsection{ConvNet-LSTM}
 LSTM network and CNNs have been researched widely but independently previously. While CNNs are able to give spatially specific information, LSTM networks are good at producing temporally comprehensive results \citep{mutegeki2020cnn}. As a result, the use of CNN-LSTM networks is extensively employed for time series data, and is particularly useful for video datasets that have a time dimension.
 
-\begin{figure}[hbt!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{CNN-LSTM.png}
     \caption{CNN-LSTM model}
@@ -199,7 +200,7 @@ Extended from 2D ConvNet, in which convolutions exclusively generate features ba
 With \textit{\begin{math} c \times l \times h \times w \end{math}} size of a video (c is a number of channel, l is a number of frames, h and w are corresponding to height and width of each frame),
 kernel size for 3D convolution and pooling are denoted by the notation \textit{\begin{math}d \times k \times k\end{math}}, where \textit{d} is the kernel temporal depth and \textit{k} is kernel spatial size, 3D ConvNet networks are programmed to accept video clips as inputs and predict the class label that correlate to \textit{n} classes based on datasets \citep{tran2015learning}.
 
-\begin{figure}[hbt!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{3D ConvNet Model.png}
     \caption{An example of 3D ConvNet with RGB video as input}
@@ -209,7 +210,7 @@ kernel size for 3D convolution and pooling are denoted by the notation \textit{\
 \subsubsection{Two-stream network}
 Introduced by Simonyan and Zisserman et al, a model which uses an individual RGB frame and an external n-frame optical flow, was shown extremely high performance on benchmarks, while also being efficient to train and test \citep{simonyan2014two}. In details, a video data is separeted into two streams, spatial stream and temporal stream. The spatial stream can spot motion in static frames, whereas the temporal stream is trained to perceive motion in images as optical flows, both of them are developed with ConvNet \citep{simonyan2014two}.
 
-\begin{figure}[hbt!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{Two-stream ConvNet Model.png}
     \caption{Two-stream 3D ConvNet model}
@@ -220,7 +221,7 @@ The result shown by Simonyan and Zisserman indicates that using optical flow for
 
 An extended version of two-stream network, 3D-Fused Two-Stream, is using a 3D ConvNet which can learn patterns related to temporal directly \citep{carreira2017quo}. The model of 3d-Fused Two-Stream is as Figure 6.
 
-\begin{figure}[hbt!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{3D-Fused Two-stream.png}
     \caption{3D-Fused Two-Stream}
@@ -232,7 +233,7 @@ With the extendable 2D ConvNet to 3D ConvNet where time dimensions can be added 
 
 In the method that Zisserman and Carreira proposed, 2 streams are trained independently but the prediction of them are computed as average of 2-stream predictions in test phase. In constrast, in this study, RGB stream and Optical Flow Stream are trained as the same time, and the outputs of them are combined and fed into simple classifier model
 
-\begin{figure}[hbt!]
+\begin{figure}[H]
     \centering
     \begin{subfigure}{0.4\textwidth}
         \centering
@@ -268,7 +269,7 @@ The outputs of an I3D is a list of probability for each frame corresponded to ea
 \subsection{Introduction}
 Optical flow is a representation of the mobility of a scene environment in relation to an observer's position. In the problem of recognizing human gesture, a static scence in a single frame can lead to an ambiguity in interpreting gesture class.  The movement of human bodies must be taken advantage of in order to have a thorough grasp of the gesture class. There are a variety methods for calculation optical flow from frame to frame, including region-based, energy-based, differential-based, phase-based \citep{marco2018computer}. The differential technique is the most frequently used method, and it is based on the premise of picture brightness constancy \citep{horn1981determining}.
 
-\begin{figure}[hbt!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Football-1024x288.png}
     \caption{Example of an optical flow frame \citep{opticalflowExample}}
@@ -303,13 +304,76 @@ Noted that $u = \frac{\textit{d}x}{\textit{d}t} $, $v = \frac{\textit{d}y}{\text
 There are two type of optical flow: Sparse and Dense optical. In details, Sparse optical flow requires a pre-processing step in which some \textit{"interesting features"} (pixels of object's edges or corners) are detected and then only calculate flow vectors of those pixels \citep{chuanenMotionEstOpticalFlow}. On the other hand, computation cost for Dense Optical Flow is expensive and slow performance \citep{wulff2017optical} because it provides flow vectors of entire frames, one flow vector per pixel.
 
 \subsection{Algorithm for converting RGB video into Optical Flow video}
-\subsubsection{Shi-Tomasi Corner Detector and Lucas-Kanade: Sparse Optical Flow}
+\subsubsection{Lucas-Kanade: Sparse Optical Flow}
 As mentioned above, the initial step of calculating Sparse optical flow is extracting interesting features which are points in images and present rich content information \citep{harris1988combined}. They are made up of two main things:
 
 \begin{itemize}
-    \item \textbf{Interesting points:} the points which are immune when an image is rotated, translated, scaled or intensified. For instance, pixels which are related to edges, corners or blobs can be considered as interest points inside an image.
+    \item \textbf{Interesting points:} The points which are immune when an image is rotated, translated, scaled or intensified. For instance, pixels which are related to edges, corners or blobs can be considered as interest points inside an image \citep{derpanis2004harris}.
+    \item \textbf{Feature Descriptors:} These findings outline the patch of images near the interest points in vectors, from raw pixel to complex Histogram of Gradients (HoG) \citep{derpanis2004harris}.
 \end{itemize}
 
+One of a popular method for corner detection is Harris Corner Detector which was proposed in 1988 by Chris Harris and Mike Stephens in the paper "A combined Corner and Edge Detector". The idea of them is that determine the intensity difference for a movement of \textit{(u, v)} in all directions. It is expressed in the mathematic form as \citep{harris1988combined}:
+
+\begin{equation} \label{eq3}
+    E(u, v) = \sum_{x, y} \underbrace{w(x, y)}_\text{window function} [\underbrace{I(x + u, y + v)}_\text{shifted intensity} - \underbrace{I(x, y)}_\text{intensity}]^2
+\end{equation}
+\myequations{Weighted sum multiplied by the intensity difference for all pixels in a window}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Basic idea of Harris Corner Detector.png}
+    \caption{Harris Corner Dector basic idea}
+    \label{Figure X}
+\end{figure}
+
+The Harris Corner Detector includes three primary steps \citep{ryu2011formula}:
+
+\begin{itemize}
+    \item It identifies which windows (small picture patches) generate extremely significant changes in intensity when moved in both the X and Y axes (i.e. gradients).
+    \item Compute a score R for each window found.
+    \item Important corners are selected and marked by applying an threshold to the score.
+\end{itemize}
+
+Another algorithm for corner dectected is Shi-Tomasi Corner Detector which was presented by Jianbo Shi and Carlo Tomasi in 1994 \citep{shi1994good}. The algorithm mostly as same as Harris Corner Detector, however the R score is calculated differently which makes the result better. Furthermore, Shi-Tomasi focuses only in the top N corners therefore it might be beneficial in case that each and every corner do not want to be detected.
+
+Deep into the calcultion of R score to identify the diffrence between HDC and SCD.
+
+\begin{table}[ht!]
+    \centering
+    \def\arraystretch{1}%
+    \caption{HDC vs SDC Scoring function}
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{|c|c|}
+            \hline \textbf{Harris Corner Detector} & \textbf{Shi-Tomasi Corner Detector} \\
+            \hline 
+                \begin{tabular}{@{}c@{}}$R = det M - k(trace M)^2$ \\ $det M = \mu_1\mu_2$ \\ $trace M = \mu_1 + \mu_2$
+                \end{tabular} & $R = min(\mu_1, \mu_2)$ \\
+            \hline
+        \end{tabular}
+    }
+    \label{table:1}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{HDC R Scoring.png}
+        \caption{Scoring function in HDC}
+        \label{figure 4.a}
+    \end{subfigure}
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SDC R scoring.png}
+        \caption{Scoring function in HDC}
+        \label{figure 4.a}
+    \end{subfigure}
+    \caption{Scoring function between HDC and SDC on $\mu_1$ - $\mu_2$ space}
+    \label{Figure 10}
+\end{figure}
+
+
+The figure below shows some result of Harris Corner Detector and Shi-Tomasi Corner Detector
 
 \subsubsection{Farneback: Dense Optical Flow}
 \subsection{Optical Flow in Deep Learning}
