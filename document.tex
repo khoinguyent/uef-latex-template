@@ -280,15 +280,14 @@ A key difference between convolutional neural networks and other neural networks
 The convolutional layer is the fundamental building element of a CNN, where most of computation occurs. The main component of convolution layers are input data, a filter and feature mapping. For instance, an image can be consider as a matrix of \textit{$width \times high \times channel$}, a video is matrix of \textit{$width \times high \times channel \times times$}. Then a kernel or filter, named as feature detector, will evaluate for the presence of a specific feature by moving across the fields of images. The final output of this processing is called as an activation map, feature map or convoluted feature \citep{dumoulin2016guide}.
 
 \begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.4\textwidth}
+    \begin{subfigure}[b]{0.5\textwidth}
         \centering
         \includegraphics[width=0.5\textwidth]{Movement of Kernel.png}
         \caption{Kernel Movement}
         \label{a}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.6\textwidth}
+    \begin{subfigure}[b]{0.5\textwidth}
         \centering
         \includegraphics[width=0.8\textwidth]{Convolution process.png}
         \caption{Convolution Processing}
@@ -316,6 +315,8 @@ Besides convolution computations, pooling operations is responsible to build up 
     \label{Figure}
 \end{figure}
 
+The pooling layer has a few drawbacks, but is also advantageous to the CNN. They simplify, optimize, and minimize the danger of overfitting.
+
 \subsubsection{Fully Connected (FC) Layers - Classification}
 
 \begin{figure}[H]
@@ -325,10 +326,39 @@ Besides convolution computations, pooling operations is responsible to build up 
     \label{Figure}
 \end{figure}
 
-
-
+It is typically inexpensive to add a Fully Connected Layer after convolutional layers to learn non-linear combinations of the features represented as output. The name of the full-connected layer accurately reflects its characteristics. A good description of the layer is that each node in the output layer connects to all nodes of the previous layer \citep{8308186}. Using the characteristics gathered from the preceding layers and their various filters, this layer conducts the duty of categorization on the data. Contrary to convolutional and pooling layers, which often employ ReLu functions to categorize inputs properly, FC layers typically employ a softmax activation function to give results in a probability ranging from 0 to 1 \citep{ibmConvNet}
 
 \subsection{1D, 2D, 3D Convolutions}
+When it comes to time series data processing, 1D Convolutions are widely used because the input in such cases is one dimension. Mentioned previously, multi channels can stack with the 1D data input.
+As the filter can travel in one direction only, then the output only have 1D.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{1D Conv.png}
+    \caption{1D Convolution}
+    \label{Figure}
+\end{figure}
+
+The diagram below visualize how 2D convolutions is. As mentioned before, 2D data also have multiple channels, so the filter can move in 2 directions and lead to the final 2D output. In computer vison, 2D convolutions are the most common convolutions. In case of 3D convolutions, it is hard to visualize the filter because of 4 dimensions the filter has, so only the 3D convolutions with single channels is visualized as the figure below. Like others, in 3D convolutions, the filter can move in 3 directions therefore the output is 3 dimentions.
+
+\begin{figure}[H]
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{2D Conv.png}
+        \caption{2D Convolutions}
+        \label{a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.6\textwidth}
+        \centering
+        \includegraphics[width=0.6\textwidth]{3D - single channel.png}
+        \caption{3D Convolutions with single channel}
+        \label{b}
+    \end{subfigure}
+    \hfill
+    \caption{2D and 3D Convolutions}
+    \label{Figure}
+\end{figure}
 
 \section{Techniques for Inflated 3D ConvNet}
 \subsection{Inflating 2D ConvNets into 3D ConvNets}
