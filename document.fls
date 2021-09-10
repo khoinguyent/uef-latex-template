@@ -55,6 +55,8 @@ INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/caption/caption.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/caption/caption.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/caption/caption3.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/caption/caption3.sty
+INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/multirow/multirow.sty
+INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/multirow/multirow.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/setspace/setspace.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/setspace/setspace.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/tocloft/tocloft.sty
@@ -247,9 +249,21 @@ INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/3D-Fused Two-stre
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/2-stream I3D Model.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/2-stream I3D Model.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/2-stream I3D Model.png
-INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Modified 2-stream I3D Model.png
-INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Modified 2-stream I3D Model.png
-INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Modified 2-stream I3D Model.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Example of Classification by using CNN.jpeg
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Example of Classification by using CNN.jpeg
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Example of Classification by using CNN.jpeg
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Movement of Kernel.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Movement of Kernel.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Movement of Kernel.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Convolution process.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Convolution process.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Convolution process.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Pooling.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Pooling.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Pooling.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Fully connected.jpeg
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Fully connected.jpeg
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Fully connected.jpeg
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Football-1024x288.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Football-1024x288.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Football-1024x288.png
@@ -266,6 +280,15 @@ INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/HDC R Scoring.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/SDC R scoring.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/SDC R scoring.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/SDC R scoring.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/HDC-SDC-1.jpeg
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/HDC-SDC-1.jpeg
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/HDC-SDC-1.jpeg
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/HDC-SDC-2.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/HDC-SDC-2.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/HDC-SDC-2.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/HDC-SDC-3.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/HDC-SDC-3.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/HDC-SDC-3.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/document.bbl
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/document.bbl
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/base/t1cmtt.fd

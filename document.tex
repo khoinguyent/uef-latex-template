@@ -10,6 +10,7 @@
 \usepackage{algpseudocode}
 \usepackage{subcaption}
 \usepackage{float}
+\usepackage{multirow}
 
 \makeatletter
 \def\BState{\State\hskip-\ALG@thistlm}
@@ -123,7 +124,7 @@ As described above, the datasets that uses for training SLR are limited, even th
             \hline
         \end{tabular}
     }
-    \label{table:1}
+    \label{table}
 \end{table}
 
 Time segmentation is another issue for SLR as it is difficult to distinguish different kinds of sign language while signers make gestures continuously to describe a phrase or a sentence \citep{xiao2020multi}.
@@ -139,22 +140,22 @@ Word-level sign recognition, an integral part of comprehending sign language phr
     \begin{subfigure}[b]{0.3\textwidth}
         \includegraphics[width=\textwidth]{fig2a.png}
         \caption{\textbf{"Scream"} is performed slightly different by different signers}
-        \label{Figure 1.a}
+        \label{a}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.3\textwidth}
         \includegraphics[width=\textwidth]{fig2b.png}
         \caption{The verb \textbf{"Wish"} (top) and the adjective \textbf{"Hungry"} (bottom) have same gesture}
-        \label{Figure 1.b}
+        \label{b}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.3\textwidth}
         \includegraphics[width=\textwidth]{fig2c.png}
         \caption{\textbf{"Rice"} (top) and \textbf{"Soup"} (bottom) have same gesture}
-        \label{Figure 1.c}
+        \label{c}
     \end{subfigure}
     \caption{Common occurrence of ambiguity and variation signing}
-    \label{Figure 1}
+    \label{Figure}
 \end{figure}
 
 \subsection{Thesis scope and target}
@@ -162,8 +163,8 @@ In fact, the researching of SLR, including isolated (word-level) and continuous 
 So this project aims to understand the architecture of I3D model, focuses on the methodology of training, evaluating the network with given dataset. A further objective of the project is getting familiar with libraries and frameworks of Deep Learning which is built for Python environment, and also other related topics such as image processing, data labelling, development tools e.g Google Colab, Anaconda, Jupyter Notebook.
 Regarding data and dataset, the project gave a comprehensive overview of organizing data, loading, splitting data for training and testing purpose.
 
-Finally, in terms of the topic's aim, this thesis primarily focuses on enhancing the accuracy of the dataset with the two-stream I3D network. Because of the limitation of facilities, such as hardware, and time-consuming of training process, the project only used the WLASL dataset. 
-In order to reduce the consumption of training time, as well as to test the effectiveness of I3D network, the dataset is divided into many sub-datasets which have 100 classes, 300 classes, 1000 classes and 2000 classes.
+Finally, in terms of the topic's aim, this thesis primarily focuses on enhancing the accuracy of the dataset with the two-stream I3D network. Because of the limitation of facilities, such as hardware, and time-consuming of training process, the project only used the WLASL and ASL dataset. 
+In order to reduce the consumption of training time, as well as to test the effectiveness of I3D network, the dataset is divided into many sub-datasets which have 100 classes, 300 classes, 1000 classes and 2000 classes which is applied for WLASL. Regarding ASL dataset, because the number of class is small (64 words) so this is not splitted.
 
 \section{Model}
 \subsection{Methodology of video classification and CNNs}
@@ -178,7 +179,7 @@ CNN, a single neural network which emulates the process of human brain \citep{le
     \centering
     \includegraphics[width=1\textwidth]{Video_classification_and_human_activity_recognition.jpg}
     \caption{An example of video classification}
-    \label{Figure 2}
+    \label{Figure}
 \end{figure}
 
 \subsection{Some models to solve video recognition problems}
@@ -189,7 +190,7 @@ LSTM network and CNNs have been researched widely but independently previously. 
     \centering
     \includegraphics[width=0.75\textwidth]{CNN-LSTM.png}
     \caption{CNN-LSTM model}
-    \label{Figure 3}
+    \label{Figure}
 \end{figure}
 
 In the model of ConvNet-LSTM, features are extracted separately from each frame of a video through a CNN network \citep{karpathy2014large}. Then they are feeded into a LSTM layer \citep{yue2015beyond,donahue2015long}, which is capable of providing stage encoding and temporal ordering. Finally, a fully connected layer is put on the top for classifer.
@@ -204,7 +205,7 @@ kernel size for 3D convolution and pooling are denoted by the notation \textit{\
     \centering
     \includegraphics[width=0.75\textwidth]{3D ConvNet Model.png}
     \caption{An example of 3D ConvNet with RGB video as input}
-    \label{Figure 4}
+    \label{Figure}
 \end{figure}
 
 \subsubsection{Two-stream network}
@@ -214,7 +215,7 @@ Introduced by Simonyan and Zisserman et al, a model which uses an individual RGB
     \centering
     \includegraphics[width=0.75\textwidth]{Two-stream ConvNet Model.png}
     \caption{Two-stream 3D ConvNet model}
-    \label{Figure 5}
+    \label{Figure}
 \end{figure}
 
 The result shown by Simonyan and Zisserman indicates that using optical flow for training a temporal dimension is outperform than training on static frames \citep{karpathy2014large}.
@@ -225,39 +226,108 @@ An extended version of two-stream network, 3D-Fused Two-Stream, is using a 3D Co
     \centering
     \includegraphics[width=0.75\textwidth]{3D-Fused Two-stream.png}
     \caption{3D-Fused Two-Stream}
-    \label{Figure 6}
+    \label{Figure}
 \end{figure}
 
 \subsection{Model in this study}
 With the extendable 2D ConvNet to 3D ConvNet where time dimensions can be added to perform the result, a coming up model is that use two streams of raw images and also optical flow frames. Thus, the temporal patterns is not only studied during the optical flow but also with RGB inputs. As a result, the performance is improved significantly compared with using only RGB stream \citep{carreira2017quo}.
 
-In the method that Zisserman and Carreira proposed, 2 streams are trained independently but the prediction of them are computed as average of 2-stream predictions in test phase. In constrast, in this study, RGB stream and Optical Flow Stream are trained as the same time, and the outputs of them are combined and fed into simple classifier model
+In the method that Zisserman and Carreira proposed, 2 streams are trained independently, Therefore, with an input video, each stream will provide a prediction according to RGB frames and optical flow frames of it which are fed into two different I3D networks. Then next step is that the predictions of RGB stream and Optical Flow stream are computed averaged to give a final prediction.
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}{0.4\textwidth}
-        \centering
-        \includegraphics[width=0.6\textwidth]{2-stream I3D Model.png}
-        \caption{2-stream 3D ConvNet by Zisserman and Carreira \citep{carreira2017quo}}
-        \label{Figure 7.a}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.4\textwidth}
-        \centering
-        \includegraphics[width=0.6\textwidth]{Modified 2-stream I3D Model.png}
-        \caption{Modified 2-stream I3D in this thesis}
-        \label{Figure 7.b}
-    \end{subfigure}
-    \caption{2 models of I3D}
-    \label{Figure 7}
+    \includegraphics[width=0.7\textwidth]{2-stream I3D Model.png}
+    \caption{2-stream 3D ConvNet by Zisserman and Carreira \citep{carreira2017quo}}
+    \label{Figure}
 \end{figure}
 
-The outputs of an I3D is a list of probability for each frame corresponded to each gloss 
+ The result of combining the predictions from RGB stream and optical flow stream is better that the prediction of each stream separately and also better than the results from other models \citep{carreira2017quo}. In the study, the group of author examined on several datasets for human recognition, such as UCF-101, HMDB-51, Kinitecs, the comparision if shown as the table below.
+
+\begin{table}[]
+    \centering
+    \resizebox{\textwidth}{!}{%
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+            \multirow{2}{*}{Architecture} & \multicolumn{3}{c|}{UCF-101} & \multicolumn{3}{c|}{HMDB-51} & \multicolumn{3}{c|}{Kinetics} \\ 
+            \cline{2-10} 
+            & RGB & Flow & RGB + Flow & RGB & Flow & RGB + Flow & RGB & Flow & RGB + Flow \\ 
+        \hline LSTM & 81.1 & - & - & 36.0 & - & - & 63.3 & - & - \\ 
+        \hline 3D ConvNet & 51.6 & - & - & 24.3 & - & - & 56.1 & - & - \\ 
+        \hline 2-Stream & 83.6 & 85.6 & 91.2 & 43.2 & 56.3 & 58.3 & 62.2 & 52.4 & 65.6 \\
+        \hline 3D-Fused & 83.2 & 85.8 & 89.3 & 49.2 & 55.5 & 56.8 & - & - & 67.2 \\ 
+        \hline 2-Stream I3D & 84.5 & 90.6 & 93.4 & 49.8 & 61.9 & 66.4 & 71.1 & 63.4 & 74.2 \\ \hline
+        \end{tabular}%
+    }
+    \caption{Comparision betwen models on several human activity datasets \citep{carreira2017quo}}
+    \label{table}
+\end{table}
+
+With an amazing result compared to others, this study use the architecture of 2-stream I3D network to see how good it is when apply to recognize sign languages instead of human activies.
 
 \section{Convolution Neural Network in image classification}
 \subsection{Introduction of CNNs}
-\subsection{Basic of CNN layers}
-\subsection{Kernel vs Filter}
+The heart of Deep Learning algorithms rely on Artificial Neural Networks (ANNs) what immitate the behaviors of human braind in which signals are send between neurons \citep{ibmANN}. Various neural network types are employed for certain use cases and data types and CNNs is a specific netwwork which are primarily focus to solve the problem of classification and computer vision tasks. Before the use of CNNs, to identify an object in images, feature extraction approaches were applied, however it were time-consuming and manual methods. With the introduction of convolutional neural networks, a more scalable technique to image classification and object identification has been made available. This methodology, which leverages linear algebra concepts, relies on matrix multiplication to find patterns inside an image. Most of CNNs have expensive computation, therefore to train model effectively, graphical processing units (GPUs) are required.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Example of Classification by using CNN.jpeg}
+    \caption{Example of CNN for classification}
+    \label{Figure}
+\end{figure}
+
+A key difference between convolutional neural networks and other neural networks is their strength ability to handle voice, audio or image inputs. In the architecture of CNNs, there are 3 primary types of layers:  convolutional layers, pooling layers and fully connected layers \citep{ibmConvNet}.
+\subsubsection{Convolution layer - the kernel}
+The convolutional layer is the fundamental building element of a CNN, where most of computation occurs. The main component of convolution layers are input data, a filter and feature mapping. For instance, an image can be consider as a matrix of \textit{$width \times high \times channel$}, a video is matrix of \textit{$width \times high \times channel \times times$}. Then a kernel or filter, named as feature detector, will evaluate for the presence of a specific feature by moving across the fields of images. The final output of this processing is called as an activation map, feature map or convoluted feature \citep{dumoulin2016guide}.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.5\textwidth]{Movement of Kernel.png}
+        \caption{Kernel Movement}
+        \label{a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.6\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{Convolution process.png}
+        \caption{Convolution Processing}
+        \label{b}
+    \end{subfigure}
+    \hfill
+    \caption{Kernel movement and Convolution Processing}
+    \label{Figure}
+\end{figure}
+
+A kernel is a matrix of weights and the dimensions of the kernel is as same as the dimensions of input parameter of a convolutional layer, for example, with 2D convolutions, 2D matrix is used as kernel matrix. On the other hand, the filter is set of kernels, and each kernel is applied to a specific channel. Therefore, a filter have one more dimension compared to the dimension of kernel. If size of kernel is $h \times w$, and with k channels, filter's dimension is $k \times h \times w$ \citep{albawi2017understanding}. Through the convolution operation, the high-level feature such as edges are extracted. Convolutional layer is not restricted to only one. Normally, the first layer of convulutional captures low-level features such as color, gradient orientation, edges. Adding more layers allows the architecture to be able to adapt high-level characteristics which gives us a network that fully understanding image in the dataset.
+
+\subsubsection{Pooling layer}
+Besides convolution computations, pooling operations is responsible to build up essential blocks in CNNs by decreasing the spatial size of convovled feature, or reducing the number of parameter input \citep{dumoulin2016guide}. By this, computational power required also decrease because of dimensionality reduction. Additionally, it is beneficial for extracting dominant features which are positional and rotational invariant, thus allows the model to properly trained. The pooling operation works similarly as the convolutional layer in that it sweeps a filter across the input, except that the filter does not contain any weights \citep{albawi2017understanding}. There are two types of pooling \citep{ibmConvNet}:
+
+\begin{itemize}
+    \item Max Pooling: with each pass of the filter over the input, the highest value is selected to the output array. This technique is more commonly implemented compared with avarage pooling.
+    \item Average Pooling: instead of choosing a max value of input, tt computes the average value inside the receptive field, then send to output array.
+\end{itemize}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{Pooling.png}
+    \caption{Pooling}
+    \label{Figure}
+\end{figure}
+
+\subsubsection{Fully Connected (FC) Layers - Classification}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Fully connected.jpeg}
+    \caption{Fully Connected layer \citep{}}
+    \label{Figure}
+\end{figure}
+
+
+
+
 \subsection{1D, 2D, 3D Convolutions}
 
 \section{Techniques for Inflated 3D ConvNet}
@@ -372,8 +442,25 @@ Deep into the calcultion of R score to identify the diffrence between HDC and SC
     \label{Figure 10}
 \end{figure}
 
+The pictures below show the result of Harris and Shi-Tomasi Corner Detector.
 
-The figure below shows some result of Harris Corner Detector and Shi-Tomasi Corner Detector
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{HDC-SDC-1.jpeg}
+    \end{subfigure}
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{HDC-SDC-2.png}
+    \end{subfigure}
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{HDC-SDC-3.png}
+    \end{subfigure}
+    \caption{Result of HDC and SDC algorithm for corner detection}
+    \label{Figure}
+\end{figure}
 
 \subsubsection{Farneback: Dense Optical Flow}
 \subsection{Optical Flow in Deep Learning}
