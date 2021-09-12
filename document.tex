@@ -14,7 +14,7 @@
 
 \makeatletter
 \def\BState{\State\hskip-\ALG@thistlm}
-\renewcommand{\ALG@name}{Compute Distance}
+\renewcommand{\ALG@name}{Convert to OF}
 \renewcommand{\thealgorithm}{}
 \makeatother
 
@@ -124,7 +124,7 @@ As described above, the datasets that uses for training SLR are limited, even th
             \hline
         \end{tabular}
     }
-    \label{table}
+    \label{Table dataset}
 \end{table}
 
 Time segmentation is another issue for SLR as it is difficult to distinguish different kinds of sign language while signers make gestures continuously to describe a phrase or a sentence \citep{xiao2020multi}.
@@ -140,22 +140,19 @@ Word-level sign recognition, an integral part of comprehending sign language phr
     \begin{subfigure}[b]{0.3\textwidth}
         \includegraphics[width=\textwidth]{fig2a.png}
         \caption{\textbf{"Scream"} is performed slightly different by different signers}
-        \label{a}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.3\textwidth}
         \includegraphics[width=\textwidth]{fig2b.png}
         \caption{The verb \textbf{"Wish"} (top) and the adjective \textbf{"Hungry"} (bottom) have same gesture}
-        \label{b}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.3\textwidth}
         \includegraphics[width=\textwidth]{fig2c.png}
         \caption{\textbf{"Rice"} (top) and \textbf{"Soup"} (bottom) have same gesture}
-        \label{c}
     \end{subfigure}
     \caption{Common occurrence of ambiguity and variation signing}
-    \label{Figure}
+    \label{Example of Sign language problems}
 \end{figure}
 
 \subsection{Thesis scope and target}
@@ -179,7 +176,7 @@ CNN, a single neural network which emulates the process of human brain \citep{le
     \centering
     \includegraphics[width=1\textwidth]{Video_classification_and_human_activity_recognition.jpg}
     \caption{An example of video classification}
-    \label{Figure}
+    \label{Figure of video classification}
 \end{figure}
 
 \subsection{Some models to solve video recognition problems}
@@ -190,7 +187,7 @@ LSTM network and CNNs have been researched widely but independently previously. 
     \centering
     \includegraphics[width=0.75\textwidth]{CNN-LSTM.png}
     \caption{CNN-LSTM model}
-    \label{Figure}
+    \label{Figure CNN-LSTM}
 \end{figure}
 
 In the model of ConvNet-LSTM, features are extracted separately from each frame of a video through a CNN network \citep{karpathy2014large}. Then they are feeded into a LSTM layer \citep{yue2015beyond,donahue2015long}, which is capable of providing stage encoding and temporal ordering. Finally, a fully connected layer is put on the top for classifer.
@@ -205,7 +202,7 @@ kernel size for 3D convolution and pooling are denoted by the notation \textit{\
     \centering
     \includegraphics[width=0.75\textwidth]{3D ConvNet Model.png}
     \caption{An example of 3D ConvNet with RGB video as input}
-    \label{Figure}
+    \label{Figure 3D ConvNet}
 \end{figure}
 
 \subsubsection{Two-stream network}
@@ -215,7 +212,7 @@ Introduced by Simonyan and Zisserman et al, a model which uses an individual RGB
     \centering
     \includegraphics[width=0.75\textwidth]{Two-stream ConvNet Model.png}
     \caption{Two-stream 3D ConvNet model}
-    \label{Figure}
+    \label{Figure 2-stream 3D ConvNet}
 \end{figure}
 
 The result shown by Simonyan and Zisserman indicates that using optical flow for training a temporal dimension is outperform than training on static frames \citep{karpathy2014large}.
@@ -226,7 +223,7 @@ An extended version of two-stream network, 3D-Fused Two-Stream, is using a 3D Co
     \centering
     \includegraphics[width=0.75\textwidth]{3D-Fused Two-stream.png}
     \caption{3D-Fused Two-Stream}
-    \label{Figure}
+    \label{Figure 3D-Fused Two Stream}
 \end{figure}
 
 \subsection{Model in this study}
@@ -238,12 +235,12 @@ In the method that Zisserman and Carreira proposed, 2 streams are trained indepe
     \centering
     \includegraphics[width=0.7\textwidth]{2-stream I3D Model.png}
     \caption{2-stream 3D ConvNet by Zisserman and Carreira \citep{carreira2017quo}}
-    \label{Figure}
+    \label{Figure 2-Stream 3D ConvNet}
 \end{figure}
 
  The result of combining the predictions from RGB stream and optical flow stream is better that the prediction of each stream separately and also better than the results from other models \citep{carreira2017quo}. In the study, the group of author examined on several datasets for human recognition, such as UCF-101, HMDB-51, Kinitecs, the comparision if shown as the table below.
 
-\begin{table}[]
+\begin{table}[H]
     \centering
     \resizebox{\textwidth}{!}{%
         \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
@@ -259,7 +256,7 @@ In the method that Zisserman and Carreira proposed, 2 streams are trained indepe
         \end{tabular}%
     }
     \caption{Comparision betwen models on several human activity datasets \citep{carreira2017quo}}
-    \label{table}
+    \label{table comparision result of models}
 \end{table}
 
 With an amazing result compared to others, this study use the architecture of 2-stream I3D network to see how good it is when apply to recognize sign languages instead of human activies.
@@ -272,7 +269,7 @@ The heart of Deep Learning algorithms rely on Artificial Neural Networks (ANNs) 
     \centering
     \includegraphics[width=0.8\textwidth]{Example of Classification by using CNN.jpeg}
     \caption{Example of CNN for classification}
-    \label{Figure}
+    \label{Figure CNN for classification}
 \end{figure}
 
 A key difference between convolutional neural networks and other neural networks is their strength ability to handle voice, audio or image inputs. In the architecture of CNNs, there are 3 primary types of layers:  convolutional layers, pooling layers and fully connected layers \citep{ibmConvNet}.
@@ -284,21 +281,39 @@ The convolutional layer is the fundamental building element of a CNN, where most
         \centering
         \includegraphics[width=0.5\textwidth]{Movement of Kernel.png}
         \caption{Kernel Movement}
-        \label{a}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.5\textwidth}
         \centering
         \includegraphics[width=0.8\textwidth]{Convolution process.png}
         \caption{Convolution Processing}
-        \label{b}
+        \label{Convolution process}
     \end{subfigure}
     \hfill
     \caption{Kernel movement and Convolution Processing}
-    \label{Figure}
+    \label{Figure CNN kernel and process}
 \end{figure}
 
 A kernel is a matrix of weights and the dimensions of the kernel is as same as the dimensions of input parameter of a convolutional layer, for example, with 2D convolutions, 2D matrix is used as kernel matrix. On the other hand, the filter is set of kernels, and each kernel is applied to a specific channel. Therefore, a filter have one more dimension compared to the dimension of kernel. If size of kernel is $h \times w$, and with k channels, filter's dimension is $k \times h \times w$ \citep{albawi2017understanding}. Through the convolution operation, the high-level feature such as edges are extracted. Convolutional layer is not restricted to only one. Normally, the first layer of convulutional captures low-level features such as color, gradient orientation, edges. Adding more layers allows the architecture to be able to adapt high-level characteristics which gives us a network that fully understanding image in the dataset.
+
+However, there are problems with convolutions to be considered. As the example in \ref*{Convolution process}, with the $5 \times 5$ matrix input, after applying the filter, the size of output matrix is $3 \times 3$. Thus, the image size is shrinked every convolution operation. Because of multi convolutional layers in the network, the original image gets smaller; however it is not expected to be shrinked every time \citep{szegedy2015going}. Another matter is that every time the kernel moves accross the images, the edges of objects inside the picture have less number of touches than the middle area of the objects, and the middle areas are also overlapped. So the output does not reflect much about the information of corner features and edges in an image. Padding is a solution to tackle these issues by keep the size of the images preserve.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{padding.png}
+    \caption{Example of padding}
+    \label{Padding}
+\end{figure}
+
+So if the input matrix has size $n \times n$, filter matrix is $f \times f$ with the padding p, then the matrix output will have the size of $(n + 2p - f + 1) \times (n + 2p -f + 1)$. In the exxample in \ref{Padding}, p is 1 while orginal input size is $3 \times 3$ and $2 \times 2$ is the size of filter matrix.
+
+Another hyperparameter related to convolution neural networks is stride. As definition, stride is number of pixels that filer matrix moves each step across the horizontal or vertical  position. The size of convolution output is depened on padding and stride hyperparameters. With padding p, $f \times f$ filter matrix, $n \times n$ input matrix, and stride s, the output dimension will be $[{(n + 2p - f + 1) / s } + 1] \times [{(n + 2p - f + 1) / s } + 1]$
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{stride.png}
+    \caption{Example of stride = 0, 1, 2 respectively.}
+\end{figure}
 
 \subsubsection{Pooling layer}
 Besides convolution computations, pooling operations is responsible to build up essential blocks in CNNs by decreasing the spatial size of convovled feature, or reducing the number of parameter input \citep{dumoulin2016guide}. By this, computational power required also decrease because of dimensionality reduction. Additionally, it is beneficial for extracting dominant features which are positional and rotational invariant, thus allows the model to properly trained. The pooling operation works similarly as the convolutional layer in that it sweeps a filter across the input, except that the filter does not contain any weights \citep{albawi2017understanding}. There are two types of pooling \citep{ibmConvNet}:
@@ -308,11 +323,11 @@ Besides convolution computations, pooling operations is responsible to build up 
     \item Average Pooling: instead of choosing a max value of input, tt computes the average value inside the receptive field, then send to output array.
 \end{itemize}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{Pooling.png}
     \caption{Pooling}
-    \label{Figure}
+    \label{Figure Pooling}
 \end{figure}
 
 The pooling layer has a few drawbacks, but is also advantageous to the CNN. They simplify, optimize, and minimize the danger of overfitting.
@@ -322,8 +337,8 @@ The pooling layer has a few drawbacks, but is also advantageous to the CNN. They
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{Fully connected.jpeg}
-    \caption{Fully Connected layer \citep{}}
-    \label{Figure}
+    \caption{Fully Connected layer \citep{towardScienceCnn}}
+    \label{Figure FC layer}
 \end{figure}
 
 It is typically inexpensive to add a Fully Connected Layer after convolutional layers to learn non-linear combinations of the features represented as output. The name of the full-connected layer accurately reflects its characteristics. A good description of the layer is that each node in the output layer connects to all nodes of the previous layer \citep{8308186}. Using the characteristics gathered from the preceding layers and their various filters, this layer conducts the duty of categorization on the data. Contrary to convolutional and pooling layers, which often employ ReLu functions to categorize inputs properly, FC layers typically employ a softmax activation function to give results in a probability ranging from 0 to 1 \citep{ibmConvNet}
@@ -336,7 +351,7 @@ As the filter can travel in one direction only, then the output only have 1D.
     \centering
     \includegraphics[width=0.5\textwidth]{1D Conv.png}
     \caption{1D Convolution}
-    \label{Figure}
+    \label{Figure 1D}
 \end{figure}
 
 The diagram below visualize how 2D convolutions is. As mentioned before, 2D data also have multiple channels, so the filter can move in 2 directions and lead to the final 2D output. In computer vison, 2D convolutions are the most common convolutions. In case of 3D convolutions, it is hard to visualize the filter because of 4 dimensions the filter has, so only the 3D convolutions with single channels is visualized as the figure below. Like others, in 3D convolutions, the filter can move in 3 directions therefore the output is 3 dimentions.
@@ -357,13 +372,30 @@ The diagram below visualize how 2D convolutions is. As mentioned before, 2D data
     \end{subfigure}
     \hfill
     \caption{2D and 3D Convolutions}
-    \label{Figure}
+    \label{Figure 2D 3D}
 \end{figure}
 
 \section{Techniques for Inflated 3D ConvNet}
 \subsection{Inflating 2D ConvNets into 3D ConvNets}
+In order to prevent spending to much time in the process of training spatio-temporal models, a simply approach is applied to utilize the successful of 2D (image) classification architectures into 3D ConvNet when 2D classified models have been achieved many significant improvements in years. As a result, the filters and pooling kernels that are coming from the 2D architectures are inflated with one more dimension, temporal dimension. So that they are from a $N \times\ N$ matrix to a $N \times N \times N$ cubic \citep{carreira2017quo}.
+
 \subsection{2D filters to 3D filters}
-\subsection{Space, time and network depth}
+In additional, the input parameters can also be boostrapted by adopting pre-trained ImageNet models. As can be seen, a video (boring video \citep{carreira2017quo}) can be made from an individual image by cloning the image many times into video scenes. Thus following the linearity, 2D filters weights are repeated N times according to time dimension and then rescaling by dividing by N. In this way, 3D ConvNet models can be implicitly train on Imagenet in which the pooled activation of boring video are the same with the input of single image. It means that the computation outputs of non-linearity layers, max and average pooling layers are as same as the 2D case \citep{mansimov2015initialization}.
+
+\subsection{Receptive field}
+To comparing with 2D models, another change to take into account is the receptive field of pooling and convolutional layers. As described before, an input vector for a convolutional neural network is an area of an image which is accessible to a filter per time and as more layers it is more increasing. 2D convolutions and pooling are symmetrical because they concentrate on image width and height (for example 7x7 kernel is accetable because it is symmetrical while a kernel 7x5 is not). When the temporal dimension is taken into consideration, it is necessary to determine the optimum receptive field, which is dependent on the frame rate and the picture dimensions of the image. \citep{towardScienceI3DUnderstanding}. According to Zisserman and Carreira, the problem of symmetric receptive field is that if it develops too rapidly in time compared to space, it may confuse edges from different objects, leading to poor feature detection; on the other hand, if it grows too slowly, dinamically scence might be fail to be captured \citep{carreira2017quo}. In the final, I3D kernels are not symmetrical due to the inclusion of temporal dimension.
+
+\subsection{Network Architecture}
+The network diagram is as the figure below \cite{carreira2017quo}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Stream architecture.png}
+    \caption{Network architect \citep{carreira2017quo}}
+    \label{Figure}
+\end{figure}
+
+To be seen in the diagram, as the begining an asymmetrical filters is used for max-pooling, keep time retains while doing pooled operations over image width and height dimensions. So far, the convolutions and pooling which related to time dimension are performed in the later stage. In this paper, the Inception module is not described in details, however it is used widely in 2D classification networks. The Inception module aggregates the results after evaluating spatial (and time in case of classifying video) information at multiple scales. In the proposal of Inception model, after going through the $1 \times 1 \times 1$ convolution, the number of input channels is reduced before passing into the larger convolution $3 \times 3 \times 3$, so the computations are less expensive compared to the alternative.
 
 \section{Optical flow}
 \subsection{Introduction}
@@ -394,7 +426,7 @@ Then, using Tayloy Series Approximation of the RHS:
 
 Next, \textit{d}t is divided to derive optical flow equation
 
-\begin{equation} \label{eq3}
+\begin{equation} \label{Op Flow equa}
     \frac{\partial I}{\partial x}u + \frac{\partial I}{\partial y}v + \frac{\partial I}{\partial t} = 0
 \end{equation}
 \myequations{Optical flow equation}
@@ -460,13 +492,13 @@ Deep into the calcultion of R score to identify the diffrence between HDC and SC
         \centering
         \includegraphics[width=\textwidth]{HDC R Scoring.png}
         \caption{Scoring function in HDC}
-        \label{figure 4.a}
+        \label{Scoring HDC}
     \end{subfigure}
     \begin{subfigure}{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth]{SDC R scoring.png}
-        \caption{Scoring function in HDC}
-        \label{figure 4.a}
+        \caption{Scoring function in SDC}
+        \label{Scoring SDC}
     \end{subfigure}
     \caption{Scoring function between HDC and SDC on $\mu_1$ - $\mu_2$ space}
     \label{Figure 10}
@@ -489,8 +521,92 @@ The pictures below show the result of Harris and Shi-Tomasi Corner Detector.
         \includegraphics[width=0.8\textwidth]{HDC-SDC-3.png}
     \end{subfigure}
     \caption{Result of HDC and SDC algorithm for corner detection}
-    \label{Figure}
 \end{figure}
+
+Then based on an assumption that in the very small period ($\delta t$), the object is not moving much and objects in a frames is changed smoothly in shade of gray. So with this assumption, Lucas - Kanade proposed an idea that a small neighborhood $n \times n$ window arround features detected (by Shi-Tomashi detector) have the same motion. Therefore the partial derivates of image I respect to positon (x, y) and time t for a pixel q inside the window is described as equation \ref{pixel intensity equation}. It is Optical Flow Equation that described earlier.
+
+The Lucas - Kanade algorithms can be implemented following:
+
+
+\begin{equation} \label{pixel intensity equation}
+    I_{x}(q_{n})V_{x} + I_{y}(q_{n})V_{y} = -I{t}(q_{n})
+\end{equation}
+\myequations{Optical Flow Equation - Lucas - Kanade algorithm}
+
+Then in a form of matrix $Av = b$ where
+
+\begin{center}
+    $A = \begin{bmatrix}
+        I_{x}(q_{n}) & I_{y}(q_{n})
+    \end{bmatrix}$
+
+    $v = \begin{bmatrix}
+        v_{x} \\ v_{y}
+    \end{bmatrix}$
+
+    $b = \begin{bmatrix}
+        -I_{t}(q_{n})
+    \end{bmatrix}$
+\end{center}
+    
+Now the issue is that solving two unknown variables $v_{x}$ and $v_{y}$ with n equations, so it is over-determined. To deal with this problem, least squares fitting is used as follow:
+
+\begin{equation}
+    \begin{bmatrix}
+        v_{x} \\ v_{y}
+    \end{bmatrix} = 
+    \begin{bmatrix}
+        \sum_{i}I_{x}(q_{i})^2 & \sum_{i}I_{x}(q_{i})I_{y}(q_{i}) \\
+        \sum_{i}I_{y}(q_{i})I_{x}(q_{i} & \sum_{i}I_{y}(q_{i})^2
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+        -\sum_{i}I_{x}(q_{i})I_{t}(q_{i}) \\
+        -\sum_{i}I_{y}(q_{i})I_{t}(q_{i})
+    \end{bmatrix}
+\end{equation}
+\myequations{New optical flow equation: two-unknow-form equation}
+
+Where $v_{x} = u = \frac{dx}{dt}$, $v_{y} = v = \frac{dy}{dt}$ indicate the movement of x and y over the time. The optical flow problem is completed when the two variable is sovled. So the algorithm identifies some key points and then calculate the optical flow vectors of these points. However, becauses of the assumption above, Lucas-Kaneda approach is only suitable for tracking object with slightly movements and not successful for large motion. Then the idea comes up compute optical flow from difference resolutions is offered with Open CV library. It is called pyramids method. In details, small motions can be ignored and the large motions are scaled to be small motions and then computed the optical flow based on the scaled motions.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{lucas-kanade-pyramid.png}
+    \caption{Lucas - Kaneda pyramid method}
+\end{figure}
+
+Below pseudo-code show how to convert RGB frames into optical flow by using Lucas - Kanade algorithm with supported by OpenCV library.
+
+\begin{algorithm}
+    \caption{Convert video to optical flow with Lucas - Kanade}
+    \begin{algorithmic}
+        \Require $video\_input$
+        \State $feature\_params \gets params \ for \ corner \ detection$
+        \State $lk\_params \gets params \ for \ Lucas - Kanade \ optical \ flow$
+        \State $color \gets create \ some \ random \ colors$
+        \State $old\_frame \gets the \ first \ frame \ of \ video \ input $
+        \State $old\_gray \gets convert \ to \ gray \ image$
+        \State $p0 \gets find \ interesting \ points$
+        \State $mask \gets create \ a \ mask \ image$
+        \While{reading frame}
+            \State $frame \gets current \ frame$
+            \State $frame\_gray \gets convert \ into \ gray \ image$
+            \State $p1, st, err \gets calculate \ optical \ flow $ \Comment{using cv2.calcOpticalFlowPyrLK}
+            \Comment{Select good points}
+            \State $good\_new\_points \gets good \ points \ based \ on \ p1$
+            \State $good\_old\_points \gets good \ points \ based \ on \ p0$
+            \For{\texttt{(new good points, old good points) iteration}}
+                \State $(a, b) \gets coordinate \ of \ new \ point$
+                \State $(c, d) \gets coordinate \ of \ old \ points $
+                \State $mask \gets draw \ line \ on \ \textit{mask} \ from \ \textit{(a, b)} \ to \ \textit{(c, d)} \, random \ color \ \textit{color}$
+                \State $frame \gets draw \ circle \ center \ \textit{(a, b)}, \ radius \ \textit{r}$
+            \EndFor
+            \State $imgage\_optical\_flow \gets image \ by \ combine \ \textit{mask} \ and \ \text{frame}$
+            \Comment{Update previous frame and points}
+            \State $old\_gray \gets \textit{frame_gray}$
+            \State $p0 \gets \textit{good\_new\_points}$
+        \EndWhile
+    \end{algorithmic}
+\end{algorithm}
 
 \subsubsection{Farneback: Dense Optical Flow}
 \subsection{Optical Flow in Deep Learning}
