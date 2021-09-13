@@ -18,7 +18,14 @@
 \renewcommand{\thealgorithm}{}
 \makeatother
 
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\renewcommand{\ALG@name}{Convert to OF}
+\renewcommand{\thealgorithm}{}
+\makeatother
+
 \algnewcommand{\LineComment}[1]{\State \(\triangleright\) #1}
+\DeclareMathOperator{\arctantwo}{arctan2}
 
 % set line spacing
 \usepackage{setspace}
@@ -419,7 +426,7 @@ Assume that the constant brightness of a pixel \textit{(x, y)} in an object does
 
 Then, using Tayloy Series Approximation of the RHS:
 
-\begin{equation} \label{eq2}
+\begin{equation} \label{Taylor Series Appx.}
     I(x, y, t) = I(x, y, t) + \frac{\partial I}{\partial x}\delta x + \frac{\partial I}{\partial y}\delta y + \frac{\partial I}{\partial t}\delta t
     \\
     \Rightarrow \frac{\partial I}{\partial y}\delta y + \frac{\partial I}{\partial t}\delta t = 0
@@ -527,9 +534,6 @@ The pictures below show the result of Harris and Shi-Tomasi Corner Detector.
 
 Then based on an assumption that in the very small period ($\delta t$), the object is not moving much and objects in a frames is changed smoothly in shade of gray. So with this assumption, Lucas - Kanade proposed an idea that a small neighborhood $n \times n$ window arround features detected (by Shi-Tomashi detector) have the same motion. Therefore the partial derivates of image I respect to positon (x, y) and time t for a pixel q inside the window is described as equation \ref{pixel intensity equation}. It is Optical Flow Equation that described earlier.
 
-The Lucas - Kanade algorithms can be implemented following:
-
-
 \begin{equation} \label{pixel intensity equation}
     I_{x}(q_{n})V_{x} + I_{y}(q_{n})V_{y} = -I{t}(q_{n})
 \end{equation}
@@ -578,7 +582,7 @@ Where $v_{x} = u = \frac{dx}{dt}$, $v_{y} = v = \frac{dy}{dt}$ indicate the move
 
 Below pseudo-code show how to convert RGB frames into optical flow by using Lucas - Kanade algorithm with supported by OpenCV library.
 
-\begin{algorithm}
+\begin{algorithm}[H]
     \caption{Convert video to optical flow with Lucas - Kanade}
     \begin{algorithmic}[1]
         \Require $video\_input$
@@ -587,7 +591,7 @@ Below pseudo-code show how to convert RGB frames into optical flow by using Luca
         \State $color \gets create \ some \ random \ colors$
         \State $old\_frame \gets the \ first \ frame \ of \ video \ input $
         \State $old\_gray \gets convert \ to \ gray \ image$
-        \State $p0 \gets find \ interesting \ points$
+        \State $p0 \gets find \ interesting \ points$ \Comment {using corner detection}
         \State $mask \gets create \ a \ mask \ image$
         \While {reading video frames}
             \State $frame \gets current \ frame$
@@ -612,6 +616,111 @@ Below pseudo-code show how to convert RGB frames into optical flow by using Luca
 \end{algorithm}
 
 \subsubsection{Farneback: Dense Optical Flow}
+Unlikely Sparse Optical Flow which only focuses on some reliable points in the frame, in Dense Optical Flow all the pixels are involved to detect change in pixel intensity between two frames. At first, a quadratic polynomial \ref{quad.polynomial} is used to approximate pixel neighborhood
+
+\begin{equation}\label{quad.polynomial}
+    f_{1}(x) = x^TA_{1}x + b_{1}^Tx + c_{1}
+\end{equation}
+\myequations{Quadratic Polynomial}
+
+And with the global displacement factor \textbf{d}, the signal $f_{2}$ is created following (\ref{f2 signal})
+
+\begin{equation}\label{f2 signal}
+    \begin{split}
+        f_{2}(x) & = f_{1}(x - d) \\
+                & = (x - d)^TA_{1}(x - d) + b_{1}^T(x - d) + c_{1} \\
+                & = x^TA_{1}x + (b_{1} - 2A_{1}d)^Tx + (d^TA_{1}d - b_{1}^Td + c{1})\\
+                & = x^TA_{2}x + b_{2}^Tx + c_{2}
+    \end{split}
+\end{equation}
+\myequations{New signal $f_{2}$ by global displacement}
+
+Thus
+
+\begin{equation} \label{coef.1}
+    A_{2} = A_{1}
+\end{equation}
+\myequations{Polynomial expansion coefficient 1}
+
+\begin{equation} \label{coef.2}
+    b_{2} = b_{1} - 2A_{1}d
+\end{equation}
+\myequations{Polynomial expansion coefficient 2}
+
+\begin{equation} \label{coef.3}
+    c_{2} = d^TA_{1}d - b_{1}^Td + c{1}
+\end{equation}
+\myequations{Polynomial expansion coefficient 3}
+
+It can be seen that the translation \textbf{d} can be solved at least \textbf{$A_{1}$} is non-singular by the equation (\ref{coef.2}) \citep{farneback2003two}
+
+\begin{equation}
+    2A_{1}d = -(b_{2} - b_{1})
+    \Rightarrow d = -\frac{1}{2}A_{1}^{-1}(b_{2} - b_{1})
+\end{equation}
+\myequations{The key observation}
+
+The Farneback optical flow algorithm can be explained following the steps:
+\begin{itemize}
+    \item The windows of image frames is approximated by quadratic polynomials follow polynomial expansion transform as above.
+    \item Based on the polynomial transform under motion, estimation of displacement fields is defined from polynomial expansion coefficients. Then dense optical flow is calculated after some refinements (in the scope of this thesis, the details of calculation steps are not referred).
+\end{itemize}
+
+To visualize the optical flow with OpenCV, from the 2 channels array of flow vectors ($\frac{dx}{dt} and \frac{dy}{dt}$) (from optical flow problem (\ref{Op Flow equa})), the magnitude and direction (angle) of flow vectors are computed (2D vector) \citep{openCvArrayFunc}.
+
+\begin{equation}\label{magnitude}
+    magnitude(I) = \sqrt{x(I)^2 + y(I)^2}
+\end{equation}
+\myequations{Magnitude calculation}
+
+\begin{equation}\label{angle}
+    angle(I) = \arctantwo{(y(I), x(I))}\frac{180}{\pi}
+\end{equation}
+\myequations{Angle of two 2D vectors}
+
+The below pseudocode is show how conduct an optical frames from a RGB video.
+
+\begin{algorithm}[H]
+    \caption{Convert into dense optical flow video}
+    \begin{algorithmic}[1]
+        \Require $video\_input$
+        \State $cur\_frame \gets first \ video \ frame$
+        \State $cur\_frame \gets convert \ \textit{frame} \ into \ grayscale \ frame $
+        \State $hsv\_mask \gets matrix \ 0 \ with \ size \ of \ \textit{frame}$
+        \State $hsv\_mask \gets set \ image \ saturation \ to \ a \ maximum \ value \ 255$
+        \While {reading video frames}
+            \State $prev\_frame \gets get \ previous \ grayscale \ frame$
+            \State $cur\_frame \gets current \ frame$
+            \State $cur\_frame \gets convert \ cur\_frame \ into \ grayscale$
+            \State $flow \gets calculate \ optical \ flow \ based \ on \ prev\_frame \ and \ cur\_frame$ \Comment{usingcv2.calcOpticalFlowFarneback}
+            \State $magnitude,\ angle \gets calculate \ flow \ vectors \ magnitude \ and \ angle$ \Comment{using cv2.cartToPolar}
+            \LineComment{Set value as per the normalized magnitude of optical flow}
+            \State $hsv\_mask \gets angle * 180 \ / \ \mathit{\pi} \ / \ 2$
+            \LineComment{Set value as per the normalized magnitude of optical flow}
+            \State $hsv\_mask \gets nomalized \ magnitude$
+            \State $rgb\_representation \gets convert \ hsv_mask \ from \ HSV \ to \ RGB$ 
+        \EndWhile
+    \end{algorithmic}
+\end{algorithm}
+
+This algortithm is applied in the thesis.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{rgb.png}
+        \caption{RGB Frame}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{flow.png}
+        \caption{Flow Frame}
+    \end{subfigure}
+    \caption{The result of optical flow frame after converting from RGB Video frame}
+    \label{dense optical flow}
+\end{figure}
+
 \subsection{Optical Flow in Deep Learning}
 
 \section{Experiment}
