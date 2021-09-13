@@ -18,6 +18,8 @@
 \renewcommand{\thealgorithm}{}
 \makeatother
 
+\algnewcommand{\LineComment}[1]{\State \(\triangleright\) #1}
+
 % set line spacing
 \usepackage{setspace}
 \setlength{\parindent}{0pt}
@@ -587,23 +589,24 @@ Below pseudo-code show how to convert RGB frames into optical flow by using Luca
         \State $old\_gray \gets convert \ to \ gray \ image$
         \State $p0 \gets find \ interesting \ points$
         \State $mask \gets create \ a \ mask \ image$
-        \While{reading frame}
+        \While {reading video frames}
             \State $frame \gets current \ frame$
             \State $frame\_gray \gets convert \ into \ gray \ image$
             \State $p1, st, err \gets calculate \ optical \ flow $ \Comment{using cv2.calcOpticalFlowPyrLK}
-            \Comment{Select good points}
+            \LineComment{Select good points}
             \State $good\_new\_points \gets good \ points \ based \ on \ p1$
             \State $good\_old\_points \gets good \ points \ based \ on \ p0$
-            \For{\texttt{(new good points, old good points) iteration}}
+            \For {$(new\_point, old\_point) \in \mathcal (good\_new\_points, good\_old\_points)$}
                 \State $(a, b) \gets coordinate \ of \ new \ point$
-                \State $(c, d) \gets coordinate \ of \ old \ points $
+                \State $(c, d) \gets coordinate \ of \ old \ points$
                 \State $mask \gets draw \ line \ on \ \textit{mask} \ from \ \textit{(a, b)} \ to \ \textit{(c, d)} \, random \ color \ \textit{color}$
                 \State $frame \gets draw \ circle \ center \ \textit{(a, b)}, \ radius \ \textit{r}$
             \EndFor
-            \State $imgage\_optical\_flow \gets image \ by \ combine \ \textit{mask} \ and \ \text{frame}$
-            \Comment{Update previous frame and points}
-            \State $old\_gray \gets \textit{frame_gray}$
-            \State $p0 \gets \textit{good\_new\_points}$
+            \State $image\_optical\_flow \gets image \ by \ \textit{(frame, mask)}$
+            \State $video\_optical\_flow \gets append \ \textit{image}$
+            \LineComment{Update previous frame and points}
+            \State $old\_gray \gets current \ frame\_gray$
+            \State $p0 \gets curren \ list \ of \ new \ good \ points$
         \EndWhile
     \end{algorithmic}
 \end{algorithm}
