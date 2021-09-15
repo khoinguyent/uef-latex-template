@@ -615,6 +615,8 @@ Below pseudo-code show how to convert RGB frames into optical flow by using Luca
     \end{algorithmic}
 \end{algorithm}
 
+\newpage
+
 \subsubsection{Farneback: Dense Optical Flow}
 Unlikely Sparse Optical Flow which only focuses on some reliable points in the frame, in Dense Optical Flow all the pixels are involved to detect change in pixel intensity between two frames. At first, a quadratic polynomial \ref{quad.polynomial} is used to approximate pixel neighborhood
 
@@ -698,35 +700,92 @@ The below pseudocode is show how conduct an optical frames from a RGB video.
             \State $hsv\_mask \gets angle * 180 \ / \ \mathit{\pi} \ / \ 2$
             \LineComment{Set value as per the normalized magnitude of optical flow}
             \State $hsv\_mask \gets nomalized \ magnitude$
-            \State $rgb\_representation \gets convert \ hsv_mask \ from \ HSV \ to \ RGB$ 
+            \State $rgb\_representation \gets convert \ hsv\_mask \ from \ HSV \ to \ RGB$ 
         \EndWhile
     \end{algorithmic}
 \end{algorithm}
 
-This algortithm is applied in the thesis.
+This algortithm is used in the thesis. However, for the flow system, it is not needed to represent flow frames therefore to generate flow tensor input, the process is stopped at generating flow vectors \textit{(u, v)} by using function \textit{calcOpticalFlowFarneback} which is supported by OpenCV. So the size of flow tensonr is \textit{$(num_frames, heigh, width, 2)$}, the number 2 indicates 2 channels of flow image, while the input size of RGB tensor is \textit{$(num_frames, heigh, width, 3)$}, 3 represents 3 channel RGB of an image.
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.5\textwidth}
+    \begin{subfigure}[b]{0.4\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{rgb.png}
+        \includegraphics[width=0.7\textwidth]{rgb.png}
         \caption{RGB Frame}
     \end{subfigure}
-    \begin{subfigure}[b]{0.5\textwidth}
+    \hfill
+    \begin{subfigure}[b]{0.4\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{flow.png}
+        \includegraphics[width=0.6\textwidth]{flow.png}
         \caption{Flow Frame}
     \end{subfigure}
     \caption{The result of optical flow frame after converting from RGB Video frame}
     \label{dense optical flow}
 \end{figure}
 
-\subsection{Optical Flow in Deep Learning}
-
 \section{Experiment}
 \subsection{Datasets}
+As mentioned above, in this thesis, the two datasets, ASL64 and WLASL, are examined. The group of authors provide both raw and pre-processed videos. To reduce time and complexicity of the project, only pre-processed videos are used for training and testing purposed.
+
 \subsubsection{Argentina Sign Language Dataset}
+The dataset was created for providing a dictonary for LSA and training purpose of automatic sign language recognition. This dataset contain 3200 videos related to 64 signs indepently executed by non-experts. These are frequently signs used by LSA \citep{Ronchetti2016}.
+
+With LSA64 datasets, authors provide 3 versions: raw version, cut/temporary segmented version and extracted version. The raw and cut/temporary version are the same, however some begining and ending scenes in cut version are removed to make the hands are static when videos start or end. On the other hands, the extracted version is that the authors extracted the position of hands and head for each frame, only hand in black background are kept with segmented image of each frame.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.5\textwidth}
+        \centering    
+        \includegraphics[width=0.5\textwidth]{LSA64_handshapes_grid_8x8.png}
+        \caption{Scene in extract version of LSA64 dataset}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.5\textwidth}
+        \centering    
+        \includegraphics[width=0.5\textwidth]{LSA64.png}
+        \caption{Scene in cut version of LSA64 dataset}
+    \end{subfigure}
+    \caption{LSA64 dataset}
+    \label{LSA64}
+\end{figure}
+
+The project is utilized the cut version of this dataset. Because of using dense flow vectors for flow stream, the motions of the whole image's pixels are captured instead of some interesting features such as left-right hand or head.
+
 \subsubsection{Word Level American Sign Language Dataset}
+The dataset of WLASL are collected from the internet with two main reliable sources, education sites of sign language such as ASL-LEX and ASLU \citep{li2020word}, and the most of video is downloaded from ASL tutorial video on Youtube. The videos uploaded in educational websites are verified by experts \citep{aslds, caselli2017asl}; on the other hands, selected ASL tutorial videos have clear tilte, between the gloss and signal, and only one sign (might be the sign is repeated multiple times in the video) with different backgrounds \citep{li2020word}. For the next step, the authors guarantee that for each gloss in the dataset the number of videos is at least seven videos so that it is possibly to spit for training and validating sets.
+
+At pre-processing step, YOLO 3 networks is employed to train to identify human in a video and as a result, it provices a largest boundary box of person during time frames. After that, the videos are cropped based on the human bounded box from YOLO training. By doing this, the model is only forcus on signer's action and remove unrelated objects in the background, increasing accuracy of the model. They also provide temporal boundary whereas the starting and ending frames of the signs are defined in each video.
+
+Also from the group of authors, the shortest video is around 0.36 seconds and the longest video is 8.12 seconds, with the avarage time of the whole dataset is around 2.41 seconds. The intra-class standard deviation is 0.85 seconds on avarage. At the end, the authors split the dataset into 4 subsets depends on the sorting of sample size for each gloss, and the top K glosses are selected (K is 100, 300, 1000, 2000) \citep{li2020word}.
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{%
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            \textbf{Dataset} & \textbf{\#Gloss} & \textbf{\#Videos} & \textbf{Mean} & \textbf{\#Signers} \\ 
+            \hline WLASL100 & 100 & 2038 & 20.4 & 97 \\ 
+            \hline WLASL300 & 300 & 5117 & 17.1 & 109 \\ 
+            \hline WLASL1000 & 1000 & 13168 & 13.2 & 116 \\ 
+            \hline WLASL2000 & 2000 & 21083 & 10.5 & 119 \\ 
+            \hline
+        \end{tabular}%
+    }
+    \caption{Statistic with WLASL dataset}
+    \label{tab:WLASL statistic}
+    \end{table}
+
+\subsubsection{Data Preprocessing and Augmentation}
+To reduce the heavily computations, firstly the solution of original videos in the datasets is reduced as 256 x 256, secondly the whole video frames are randomly crop as 224 x 244, and with 50\% of probability of flipping horizontal. Lastly, only 64 consecutive frames are extracted to be feed into the network (both streams). This procedure lead to increasing of model's accuracy \citep{li2020word}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{data pre-processing.png}
+    \caption{Video pre-processing}
+    \label{fig:data preprocessing}
+\end{figure}
+
 \subsection{Setup environment}
 \subsubsection{Python}
 \subsubsection{Goolge Colaboratory}
