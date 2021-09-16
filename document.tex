@@ -11,6 +11,7 @@
 \usepackage{subcaption}
 \usepackage{float}
 \usepackage{multirow}
+\usepackage{mathtools}
 
 \makeatletter
 \def\BState{\State\hskip-\ALG@thistlm}
@@ -401,10 +402,121 @@ The network diagram is as the figure below \cite{carreira2017quo}
     \centering
     \includegraphics[width=\textwidth]{Stream architecture.png}
     \caption{Network architect \citep{carreira2017quo}}
-    \label{Figure}
+    \label{Fig: network architech I3d}
 \end{figure}
 
 To be seen in the diagram, as the begining an asymmetrical filters is used for max-pooling, keep time retains while doing pooled operations over image width and height dimensions. So far, the convolutions and pooling which related to time dimension are performed in the later stage. In this paper, the Inception module is not described in details, however it is used widely in 2D classification networks. The Inception module aggregates the results after evaluating spatial (and time in case of classifying video) information at multiple scales. In the proposal of Inception model, after going through the $1 \times 1 \times 1$ convolution, the number of input channels is reduced before passing into the larger convolution $3 \times 3 \times 3$, so the computations are less expensive compared to the alternative.
+
+\section{Model evaluating}
+The objective of Machine Learning/Deep Learning model is trying to minimize the difference between the prediction and actual result (or called as \textit{ground truth}). The process of calculating the difference is named lost/cost function. The classification problem generally can be divided into two types: multi-class classification and multi-label classification \citep{understandingLossFunction}. The difference between multi-class and multi-label classification is that the prediction of multi-class is just belonged to only one class but the output of multi-label might be belonged to more than one classes (\ref{fig. Multi-class vs multi-label}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Multi-class vs multi-label.png}
+    \caption{Multi-class vs Mult-label classification}
+    \label{fig. Multi-class vs multi-label}
+\end{figure}
+
+Generally, the output vectors of CNNs are transformed to compute loss value by Sigmoid or Softmax functions. When applied Sigmoid function, the vector is scaled in range of 0 to 1, and for each element, it is calculated independently. Softmax function, it is not a loss, is used to produce scores \textit{\textbf{$s$}}, in which an element is a probability of the prediction belongs to the class \textit{\textbf{$s_i$}}. The Softmax function depends on all elements of \textit{\textbf{$s$}}. The Sigmoid (\ref{Sigmoid}) and Softmax (\ref{Softmax}) function can be calculated as equations below \citep{understandingLossFunction}.
+
+\begin{equation} \label{Sigmoid}
+    f(s_i) = \frac{1}{1 + e^{-s_i}}
+\end{equation}
+\myequations{Sigmoid function}
+
+\begin{equation} \label{Softmax}
+    f(s)_i = \frac{e^{s_i}}{\sum_{j}^{C} e^{s_j}}
+\end{equation}
+\myequations{Softmax function}
+
+To measure the difference between to probability distributions of set of data, cross-entropy is applied. The cross-entropy loss is defined:
+
+\begin{equation} \label{Cross-Entropy calculation}
+    CE = -\sum_{i}^{C} t_{i}log(s_{i})
+\end{equation}
+\myequations{Cross entropy}
+
+Where $t_i$ is the groundtruth, $s_i$ is the score for each class $C_i$. Normally, before calculating the CE loss, an activation function (Softmax or Sigmoid) is applied to produce a score. Activation function is denoted as $f(s_i)$.
+
+\subsection{Categorical Cross-Entropy Loss}
+To evaluate the model of multi-class classification, Softmax activaton combined with Cross-Entropy loss is used. It means the output of CNNs is a probability over the C classes for each input item.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Softmax Cross-Entropy Loss.png}
+    \caption{Softmax Cross-Entroy Loss}
+\end{figure}
+
+\begin{equation} \label{Softmax Cross-entropy loss (a)}
+    CE = -\sum_{i}^{C}t_{i}log(\frac{e^{s_i}}{\sum_{j}^{C}e^{s_j}})
+\end{equation}
+\myequations{Softmax Cross-entropy Loss function (a)}
+
+As normally, in case of multi-class problems, labels are reprented as one-hot vectors, thus only the class $C_p$ (positive class) keeps its term in the loss. So far, only one element in the target vector is non-zero, $t_i = t_p$. Because $t_j = 0$ when $j \neq i$ and $t_i = 1$ when $i = p$, therefore the equation (\ref{Softmax Cross-entropy loss (a)}) can be written as
+
+\begin{equation} \label{Softmax Cross-entropy loss (b)}
+    CE = -log(\frac{e^{s_p}}{\sum_{j}^{C}e^{s_j}})
+\end{equation}
+\myequations{Softmax Cross-entropy Loss function (b)}
+
+The next step is find out the optimum values for parameters in the network by calculating the gradient of loss function with respect to the output of CNN, then applying the back-propagation algorithm to optimize the loss function. So the gradient of CE loss respect each class score in $s$ needs to be computed. Despite the groundtruth $C_p$, the gradient for other classes are the same, the derivative respect to the $C_p$ class (eq. (\ref{Derivative for positive class C_p})) and other classes (eq. (\ref{Derivative for negative classes})) are defined \citep{cross-entropy,softmax-derivative}:
+
+\begin{equation} \label{Derivative for positive class C_p}
+    \frac{\delta}{\delta s_{p}}(-log(\frac{e^{s_p}}{\sum_{j}^{C}e^{s_j}})) = (\frac{e^{s_p}}{\sum_{j}^{C}e^{s_j}} - 1)
+\end{equation}
+\myequations{Derivative for positive class}
+
+\begin{equation} \label{Derivative for negative classes}
+    \frac{\delta}{\delta s_{n}}(-log(\frac{e^{s_p}}{\sum_{j}^{C}e^{s_j}})) = (\frac{e^{s_n}}{\sum_{j}^{C}e^{s_j}})
+\end{equation}
+\myequations{Derivative for negative classes}
+
+$s_n$ is the score of negative classes differ from $C_p$
+
+\subsection{Binary Cross-Entropy loss}
+Instead of using a combiation between Softmax activation and cross-entropy, this loss function is using Sigmoid activation. Therefore it is also called as Sigmoid Cross-entropy. While in Softmax activation a score of an elements depends on all elements, the output with Sigmoid activation are dependently to each others so that the loss estimated value for each output vector component is unaffected by the value of other component elements. This is the reason why Sigmoid Cross-Entropy is used in multi-label classification problems where prediction of an element belonging to a specific class should not affect the judgement for another class.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Binary Cross-entropy.png}
+    \caption{Binary Cross-Entropy Loss}
+    \label{fig. binary CE loss}
+\end{figure}
+
+In this case, an output is evaluated that it is belonging to the class $C_i$ (for all classes $C$) or not, tha's why it is called \textit{"binary"}. The local loss for each class $C_i$ is defined (\ref{Binary Cross-Entropy Loss})
+
+\begin{equation} \label{Binary Cross-Entropy Loss (a)}
+    \begin{split}
+        CE & = -\sum_{i = 1}^{C' = 2} t_{i}log(f(s_i)) \\
+            & = -t_{1}log(f(s_1)) - (1 - t_1)log(1 - f(s_1))
+    \end{split}   
+\end{equation}
+\myequations{Binary Cross-Entropy Loss (a)}
+
+Where $f(s_{i})$ is sigmoid function at (\ref{Sigmoid}). The problem of multi-label classification can be considered as multi \textit{small} binary problems: is the output belonged to the class $C_i$ for every class $C$? Therefore each $C_i$ class, $t_1$ and $s_1$ is the groundtruth and the score of the setup binary problem within the class. It is known that the value of $t_1$ is binary (only 0 or 1, positive or negative) so the equation (\ref{Binary Cross-Entropy Loss (a)}) can re-write as
+
+\begin{equation} \label{Binary Cross-Entropy Loss (b)}
+    f(x) = 
+    \begin{dcases}
+        -log(f(s_{1})) \text{if $t_1 = 1$} \\
+        -log(1 - f(s_1)) \text{if $t_1 = 0$}
+    \end{dcases}
+\end{equation}
+\myequations{Binary Cross-Entropy Loss (b)}
+
+As saying before, by using sigmoid activation, the score of each class is independent with other class, only effect by the loss of binary problem itself. Thus the gradient respect to the score $s_i$ is
+
+\begin{equation} \label{binary cross-entropy gradient}
+    \begin{split}
+        \frac{\delta}{\delta s_i}(CE(f(s_i))) & = t_1(f(s_1) - 1) + (1 - t_1)(f(s_1)) \\
+        & = \begin{dcases}
+            f(s_1) - 1 \text{if $t_1 = 1$} \\
+            f(s_1) \text{if $t_1 = 0$}
+        \end{dcases}
+    \end{split}
+\end{equation}
+
+For the global loss of the model, it is calculated by sum up local loss of each class $C_i$. This is the way to evaluate the thesis model.
 
 \section{Optical flow}
 \subsection{Introduction}
@@ -477,7 +589,7 @@ The Harris Corner Detector includes three primary steps \citep{ryu2011formula}:
 
 Another algorithm for corner dectected is Shi-Tomasi Corner Detector which was presented by Jianbo Shi and Carlo Tomasi in 1994 \citep{shi1994good}. The algorithm mostly as same as Harris Corner Detector, however the R score is calculated differently which makes the result better. Furthermore, Shi-Tomasi focuses only in the top N corners therefore it might be beneficial in case that each and every corner do not want to be detected.
 
-Deep into the calcultion of R score to identify the diffrence between HDC and SCD.
+Deep into the calcultion of R score to identify the difference between HDC and SCD.
 
 \begin{table}[ht!]
     \centering
@@ -777,7 +889,7 @@ Also from the group of authors, the shortest video is around 0.36 seconds and th
     \end{table}
 
 \subsubsection{Data Preprocessing and Augmentation}
-To reduce the heavily computations, firstly the solution of original videos in the datasets is reduced as 256 x 256, secondly the whole video frames are randomly crop as 224 x 244, and with 50\% of probability of flipping horizontal. Lastly, only 64 consecutive frames are extracted to be feed into the network (both streams). This procedure lead to increasing of model's accuracy \citep{li2020word}.
+To reduce the heavily computations, firstly the solution of original videos in the datasets is reduced as 256 x 256, secondly the whole video frames are randomly crop as 224 x 244, and with 50\% of probability of flipping horizontal. Lastly, only 64 consecutive frames are extracted to be feed into the network (both streams). This procedure lead to increasing of model's accuracy \citep{karpathy2014large}.
 
 \begin{figure}[H]
     \centering
@@ -788,8 +900,37 @@ To reduce the heavily computations, firstly the solution of original videos in t
 
 \subsection{Setup environment}
 \subsubsection{Python}
+The whole project is implemented with Python programming language. The reason is that Python is a high level programing language which is commonly used in Data Science, Machine Learning or Deep Learning project. Moreover, there are many libraries are well-supported for building, producing deep learning networks and algorithm, namely Keras, Pytorch, Tensor Flow, Numpy, Pandas and also for data visualization such as Seaborn, Matplotlib.
+
+Besides, OpenCV is a most favourite framework for image and video processing. OpenCV supports most of commonly functions: crop, flip, rotate, reading video frame, translate into grayscale or other format as well as many complex functions like corner detection (Harris Corner Detector, Shi-Tomashi Corner Detector), flow calculation (sparse and dense optical flow).
+
 \subsubsection{Goolge Colaboratory}
-\subsubsection{Project structure}
+Because of limitation of personal machine, the project is runing on cloud, in details, Google Colaboratory (or Google Colab in short term). Google Colab is a product from Google Research whereas python code can be executed arbitrary through the web browser. The advantage of Google Colab is that we can utilize the strength of GPU on Google Server to perform training and validating processes. However, there are some side effects of using Colab product. Firstly, from colab environment, the data which is stored locally is inaccessible, it is required to move the whole datasets into cloud storage (in this case, using Google Drive), and with large datasets, it takes long time to be uploaded and also storage-consuming. Secondly, Google only allows 24-hour session, it means after 24 hours training the session is terminated. Lastly, because of sharing resources, sometimes GPUs are occupied by others.
+
+\subsubsection{Project details}
+The project is split into multi parts:
+
+\begin{itemize}
+    \item Utilities: all utilities functions that support data processing, included video processing as metioned above (cropping, flipping, converting RGB to Flow Vectors), and also function for converting an input array into tensor which is used in the network.
+    \item Network model: this indicates the structure of each layer in I3D network \ref{Fig: network architech I3d}. The code is following strictly the structure of I3D network model trained on Kinetics \citep{szegedy2015going}
+    \item Data processing: this is used to make up data which is used in the network by utilizing Dataset and DataLoader which supported by Pytorch library. By using these, data can be easily loaded for training and testing, also it is easy splitted into multi batches for training purpose.
+    \item Training: in this section, the training process trains and evaluate the set of training data; also the network stage is kept track for every epoch in case that the session is terminated (as mentioned above), the weigths can be loaded to train continue, avoid for training everything from begining.
+    \item Testing: with the test set, the model tries to predict the gloss of videos.
+\end{itemize}
+
+So far, the model trains ASL and WLASL independently to see how good it is for separated datasets.
+
+\subsubsection{Hyperparameter}
+For the initial configuration, the training parameters are setup with:
+
+\begin{itemize}
+    \item Batch size: the batch size is 8
+    \item Input size is $(64 \times 256 \times 256 \times 3)$ and $(64 \times 256 \times 256 \times 2)$ for RGB stream and flow stream respectively.
+    \item Number of class: it is depend on the dataset. We have trained with WLASL100, WLASL300, WLASL1000 and ASL64.
+    \item Learning rate: initial value is 0.001, and during the training process, I used Adam optimizer with Pytorch library to optimze learning rate for every 8 steps.
+    \item Number of epoch: using early stopping technique.
+\end{itemize}
+
 \subsection{Results}
 
 \section{Conclusion}
