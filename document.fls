@@ -288,23 +288,12 @@ INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/3D - single chann
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Stream architecture.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Stream architecture.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Stream architecture.png
-INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Multi-class vs multi-label.png
-INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Multi-class vs multi-label.png
-INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Multi-class vs multi-label.png
-INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/jknappen/ec/ecbi1200.tfm
-INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Softmax Cross-Entropy Loss.png
-INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Softmax Cross-Entropy Loss.png
-INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Softmax Cross-Entropy Loss.png
-INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Binary Cross-entropy.png
-INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Binary Cross-entropy.png
-INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Binary Cross-entropy.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Football-1024x288.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Football-1024x288.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Football-1024x288.png
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/jknappen/ec/ecrm0800.tfm
-INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
-INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/jknappen/ec/ecrm0600.tfm
-INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Football-1024x288.png
-INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Football-1024x288.png
-INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Football-1024x288.png
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/jknappen/ec/ecti0800.tfm
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/jknappen/ec/ecrm0600.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/jknappen/ec/ecti0600.tfm
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Basic idea of Harris Corner Detector.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Basic idea of Harris Corner Detector.png
@@ -337,6 +326,18 @@ INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/rgb.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/flow.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/flow.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/flow.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Multi-class vs multi-label.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Multi-class vs multi-label.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Multi-class vs multi-label.png
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/jknappen/ec/ecbi1200.tfm
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Softmax Cross-Entropy Loss.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Softmax Cross-Entropy Loss.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Softmax Cross-Entropy Loss.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Binary Cross-entropy.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Binary Cross-entropy.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Binary Cross-entropy.png
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmti7.tfm
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/LSA64_handshapes_grid_8x8.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/LSA64_handshapes_grid_8x8.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/LSA64_handshapes_grid_8x8.png
@@ -346,6 +347,30 @@ INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/LSA64.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/data pre-processing.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/data pre-processing.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/data pre-processing.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Result_ASL_flow_Loss.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Result_ASL_flow_Loss.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Result_ASL_flow_Loss.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Result_on_ASL_Flow_Dataset.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Result_on_ASL_Flow_Dataset.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Result_on_ASL_Flow_Dataset.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/result_ASL_rgb_loss.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/result_ASL_rgb_loss.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/result_ASL_rgb_loss.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Result_ASL_rgb_accuracy.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Result_ASL_rgb_accuracy.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/Result_ASL_rgb_accuracy.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/result_on_wlasl_100_rgb.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/result_on_wlasl_100_rgb.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/result_on_wlasl_100_rgb.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/result_on_wlasl_100_rgb_loss.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/result_on_wlasl_100_rgb_loss.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/result_on_wlasl_100_rgb_loss.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/result_wlasl_100_flow_acc.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/result_wlasl_100_flow_acc.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/result_wlasl_100_flow_acc.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/result_wlasl_100_flow_loss.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/result_wlasl_100_flow_loss.png
+INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/./images/result_wlasl_100_flow_loss.png
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/document.bbl
 INPUT /Users/nguyen/Desktop/Thesis/uef-latex-template/document.bbl
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/base/t1cmtt.fd

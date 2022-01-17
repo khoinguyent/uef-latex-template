@@ -171,7 +171,9 @@ So this project aims to understand the architecture of I3D model, focuses on the
 Regarding data and dataset, the project gave a comprehensive overview of organizing data, loading, splitting data for training and testing purpose.
 
 Finally, in terms of the topic's aim, this thesis primarily focuses on enhancing the accuracy of the dataset with the two-stream I3D network. Because of the limitation of facilities, such as hardware, and time-consuming of training process, the project only used the WLASL and ASL dataset. 
-In order to reduce the consumption of training time, as well as to test the effectiveness of I3D network, the dataset is divided into many sub-datasets which have 100 classes, 300 classes, 1000 classes and 2000 classes which is applied for WLASL. Regarding ASL dataset, because the number of class is small (64 words) so this is not splitted.
+In order to reduce the consumption of training time, as well as to test the effectiveness of I3D network, the dataset is divided into many sub-datasets which have 100 classes, 300 classes, 1000 classes and 2000 classes which is applied for WLASL by the authors. However, in this thesis, I only used 100 classes to train and test. Regarding ASL dataset, because the number of class is small (64 words) so this is not splitted.
+
+\newpage
 
 \section{Model}
 \subsection{Methodology of video classification and CNNs}
@@ -270,6 +272,8 @@ In the method that Zisserman and Carreira proposed, 2 streams are trained indepe
 \end{table}
 
 With an amazing result compared to others, this study use the architecture of 2-stream I3D network to see how good it is when apply to recognize sign languages instead of human activies.
+
+\newpage
 
 \section{Convolution Neural Network in image classification}
 \subsection{Introduction of CNNs}
@@ -385,6 +389,8 @@ The diagram below visualize how 2D convolutions is. As mentioned before, 2D data
     \label{Figure 2D 3D}
 \end{figure}
 
+\newpage
+
 \section{Techniques for Inflated 3D ConvNet}
 \subsection{Inflating 2D ConvNets into 3D ConvNets}
 In order to prevent spending to much time in the process of training spatio-temporal models, a simply approach is applied to utilize the successful of 2D (image) classification architectures into 3D ConvNet when 2D classified models have been achieved many significant improvements in years. As a result, the filters and pooling kernels that are coming from the 2D architectures are inflated with one more dimension, temporal dimension. So that they are from a $N \times\ N$ matrix to a $N \times N \times N$ cubic \citep{carreira2017quo}.
@@ -407,116 +413,7 @@ The network diagram is as the figure below \cite{carreira2017quo}
 
 To be seen in the diagram, as the begining an asymmetrical filters is used for max-pooling, keep time retains while doing pooled operations over image width and height dimensions. So far, the convolutions and pooling which related to time dimension are performed in the later stage. In this paper, the Inception module is not described in details, however it is used widely in 2D classification networks. The Inception module aggregates the results after evaluating spatial (and time in case of classifying video) information at multiple scales. In the proposal of Inception model, after going through the $1 \times 1 \times 1$ convolution, the number of input channels is reduced before passing into the larger convolution $3 \times 3 \times 3$, so the computations are less expensive compared to the alternative.
 
-\section{Model evaluating}
-The objective of Machine Learning/Deep Learning model is trying to minimize the difference between the prediction and actual result (or called as \textit{ground truth}). The process of calculating the difference is named lost/cost function. The classification problem generally can be divided into two types: multi-class classification and multi-label classification \citep{understandingLossFunction}. The difference between multi-class and multi-label classification is that the prediction of multi-class is just belonged to only one class but the output of multi-label might be belonged to more than one classes (\ref{fig. Multi-class vs multi-label}).
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{Multi-class vs multi-label.png}
-    \caption{Multi-class vs Mult-label classification}
-    \label{fig. Multi-class vs multi-label}
-\end{figure}
-
-Generally, the output vectors of CNNs are transformed to compute loss value by Sigmoid or Softmax functions. When applied Sigmoid function, the vector is scaled in range of 0 to 1, and for each element, it is calculated independently. Softmax function, it is not a loss, is used to produce scores \textit{\textbf{$s$}}, in which an element is a probability of the prediction belongs to the class \textit{\textbf{$s_i$}}. The Softmax function depends on all elements of \textit{\textbf{$s$}}. The Sigmoid (\ref{Sigmoid}) and Softmax (\ref{Softmax}) function can be calculated as equations below \citep{understandingLossFunction}.
-
-\begin{equation} \label{Sigmoid}
-    f(s_i) = \frac{1}{1 + e^{-s_i}}
-\end{equation}
-\myequations{Sigmoid function}
-
-\begin{equation} \label{Softmax}
-    f(s)_i = \frac{e^{s_i}}{\sum_{j}^{C} e^{s_j}}
-\end{equation}
-\myequations{Softmax function}
-
-To measure the difference between to probability distributions of set of data, cross-entropy is applied. The cross-entropy loss is defined:
-
-\begin{equation} \label{Cross-Entropy calculation}
-    CE = -\sum_{i}^{C} t_{i}log(s_{i})
-\end{equation}
-\myequations{Cross entropy}
-
-Where $t_i$ is the groundtruth, $s_i$ is the score for each class $C_i$. Normally, before calculating the CE loss, an activation function (Softmax or Sigmoid) is applied to produce a score. Activation function is denoted as $f(s_i)$.
-
-\subsection{Categorical Cross-Entropy Loss}
-To evaluate the model of multi-class classification, Softmax activaton combined with Cross-Entropy loss is used. It means the output of CNNs is a probability over the C classes for each input item.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{Softmax Cross-Entropy Loss.png}
-    \caption{Softmax Cross-Entroy Loss}
-\end{figure}
-
-\begin{equation} \label{Softmax Cross-entropy loss (a)}
-    CE = -\sum_{i}^{C}t_{i}log(\frac{e^{s_i}}{\sum_{j}^{C}e^{s_j}})
-\end{equation}
-\myequations{Softmax Cross-entropy Loss function (a)}
-
-As normally, in case of multi-class problems, labels are reprented as one-hot vectors, thus only the class $C_p$ (positive class) keeps its term in the loss. So far, only one element in the target vector is non-zero, $t_i = t_p$. Because $t_j = 0$ when $j \neq i$ and $t_i = 1$ when $i = p$, therefore the equation (\ref{Softmax Cross-entropy loss (a)}) can be written as
-
-\begin{equation} \label{Softmax Cross-entropy loss (b)}
-    CE = -log(\frac{e^{s_p}}{\sum_{j}^{C}e^{s_j}})
-\end{equation}
-\myequations{Softmax Cross-entropy Loss function (b)}
-
-The next step is find out the optimum values for parameters in the network by calculating the gradient of loss function with respect to the output of CNN, then applying the back-propagation algorithm to optimize the loss function. So the gradient of CE loss respect each class score in $s$ needs to be computed. Despite the groundtruth $C_p$, the gradient for other classes are the same, the derivative respect to the $C_p$ class (eq. (\ref{Derivative for positive class C_p})) and other classes (eq. (\ref{Derivative for negative classes})) are defined \citep{cross-entropy,softmax-derivative}:
-
-\begin{equation} \label{Derivative for positive class C_p}
-    \frac{\delta}{\delta s_{p}}(-log(\frac{e^{s_p}}{\sum_{j}^{C}e^{s_j}})) = (\frac{e^{s_p}}{\sum_{j}^{C}e^{s_j}} - 1)
-\end{equation}
-\myequations{Derivative for positive class}
-
-\begin{equation} \label{Derivative for negative classes}
-    \frac{\delta}{\delta s_{n}}(-log(\frac{e^{s_p}}{\sum_{j}^{C}e^{s_j}})) = (\frac{e^{s_n}}{\sum_{j}^{C}e^{s_j}})
-\end{equation}
-\myequations{Derivative for negative classes}
-
-$s_n$ is the score of negative classes differ from $C_p$
-
-\subsection{Binary Cross-Entropy loss}
-Instead of using a combiation between Softmax activation and cross-entropy, this loss function is using Sigmoid activation. Therefore it is also called as Sigmoid Cross-entropy. While in Softmax activation a score of an elements depends on all elements, the output with Sigmoid activation are dependently to each others so that the loss estimated value for each output vector component is unaffected by the value of other component elements. This is the reason why Sigmoid Cross-Entropy is used in multi-label classification problems where prediction of an element belonging to a specific class should not affect the judgement for another class.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{Binary Cross-entropy.png}
-    \caption{Binary Cross-Entropy Loss}
-    \label{fig. binary CE loss}
-\end{figure}
-
-In this case, an output is evaluated that it is belonging to the class $C_i$ (for all classes $C$) or not, tha's why it is called \textit{"binary"}. The local loss for each class $C_i$ is defined (\ref{Binary Cross-Entropy Loss})
-
-\begin{equation} \label{Binary Cross-Entropy Loss (a)}
-    \begin{split}
-        CE & = -\sum_{i = 1}^{C' = 2} t_{i}log(f(s_i)) \\
-            & = -t_{1}log(f(s_1)) - (1 - t_1)log(1 - f(s_1))
-    \end{split}   
-\end{equation}
-\myequations{Binary Cross-Entropy Loss (a)}
-
-Where $f(s_{i})$ is sigmoid function at (\ref{Sigmoid}). The problem of multi-label classification can be considered as multi \textit{small} binary problems: is the output belonged to the class $C_i$ for every class $C$? Therefore each $C_i$ class, $t_1$ and $s_1$ is the groundtruth and the score of the setup binary problem within the class. It is known that the value of $t_1$ is binary (only 0 or 1, positive or negative) so the equation (\ref{Binary Cross-Entropy Loss (a)}) can re-write as
-
-\begin{equation} \label{Binary Cross-Entropy Loss (b)}
-    f(x) = 
-    \begin{dcases}
-        -log(f(s_{1})) \text{if $t_1 = 1$} \\
-        -log(1 - f(s_1)) \text{if $t_1 = 0$}
-    \end{dcases}
-\end{equation}
-\myequations{Binary Cross-Entropy Loss (b)}
-
-As saying before, by using sigmoid activation, the score of each class is independent with other class, only effect by the loss of binary problem itself. Thus the gradient respect to the score $s_i$ is
-
-\begin{equation} \label{binary cross-entropy gradient}
-    \begin{split}
-        \frac{\delta}{\delta s_i}(CE(f(s_i))) & = t_1(f(s_1) - 1) + (1 - t_1)(f(s_1)) \\
-        & = \begin{dcases}
-            f(s_1) - 1 \text{if $t_1 = 1$} \\
-            f(s_1) \text{if $t_1 = 0$}
-        \end{dcases}
-    \end{split}
-\end{equation}
-
-For the global loss of the model, it is calculated by sum up local loss of each class $C_i$. This is the method which is using to evaluate model in this research
+\newpage
 
 \section{Optical flow}
 \subsection{Introduction}
@@ -817,7 +714,7 @@ The below pseudocode is show how conduct an optical frames from a RGB video.
     \end{algorithmic}
 \end{algorithm}
 
-This algortithm is used in the thesis. However, for the flow system, it is not needed to represent flow frames therefore to generate flow tensor input, the process is stopped at generating flow vectors \textit{(u, v)} by using function \textit{calcOpticalFlowFarneback} which is supported by OpenCV. So the size of flow tensonr is \textit{$(num_frames, heigh, width, 2)$}, the number 2 indicates 2 channels of flow image, while the input size of RGB tensor is \textit{$(num_frames, heigh, width, 3)$}, 3 represents 3 channel RGB of an image.
+This algortithm is used in the thesis. However, for the flow system, it is not needed to represent flow frames therefore to generate flow tensor input, the process is stopped at generating flow vectors \textit{(u, v)} by using function \textit{calcOpticalFlowFarneback} which is supported by OpenCV. So the size of flow tensonr is \textit{$(num\_frames, heigh, width, 2)$}, the number 2 indicates 2 channels of flow image, while the input size of RGB tensor is \textit{$(num\_frames, heigh, width, 3)$}, 3 represents 3 channel RGB of an image.
 
 \begin{figure}[H]
     \centering
@@ -836,7 +733,120 @@ This algortithm is used in the thesis. However, for the flow system, it is not n
     \label{dense optical flow}
 \end{figure}
 
+\newpage
+
 \section{Experiment}
+\subsection{Model evaluating}
+The objective of Machine Learning/Deep Learning model is trying to minimize the difference between the prediction and actual result (or called as \textit{ground truth}). The process of calculating the difference is named lost/cost function. The classification problem generally can be divided into two types: multi-class classification and multi-label classification \citep{understandingLossFunction}. The difference between multi-class and multi-label classification is that the prediction of multi-class is just belonged to only one class but the output of multi-label might be belonged to more than one classes (\ref{fig. Multi-class vs multi-label}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Multi-class vs multi-label.png}
+    \caption{Multi-class vs Mult-label classification}
+    \label{fig. Multi-class vs multi-label}
+\end{figure}
+
+Generally, the output vectors of CNNs are transformed to compute loss value by Sigmoid or Softmax functions. When applied Sigmoid function, the vector is scaled in range of 0 to 1, and for each element, it is calculated independently. Softmax function, it is not a loss, is used to produce scores \textit{\textbf{$s$}}, in which an element is a probability of the prediction belongs to the class \textit{\textbf{$s_i$}}. The Softmax function depends on all elements of \textit{\textbf{$s$}}. The Sigmoid (\ref{Sigmoid}) and Softmax (\ref{Softmax}) function can be calculated as equations below \citep{understandingLossFunction}.
+
+\begin{equation} \label{Sigmoid}
+    f(s_i) = \frac{1}{1 + e^{-s_i}}
+\end{equation}
+\myequations{Sigmoid function}
+
+\begin{equation} \label{Softmax}
+    f(s)_i = \frac{e^{s_i}}{\sum_{j}^{C} e^{s_j}}
+\end{equation}
+\myequations{Softmax function}
+
+To measure the difference between to probability distributions of set of data, cross-entropy is applied. The cross-entropy loss is defined:
+
+\begin{equation} \label{Cross-Entropy calculation}
+    CE = -\sum_{i}^{C} t_{i}log(s_{i})
+\end{equation}
+\myequations{Cross entropy}
+
+Where $t_i$ is the groundtruth, $s_i$ is the score for each class $C_i$. Normally, before calculating the CE loss, an activation function (Softmax or Sigmoid) is applied to produce a score. Activation function is denoted as $f(s_i)$.
+
+\subsubsection{Categorical Cross-Entropy Loss}
+To evaluate the model of multi-class classification, Softmax activaton combined with Cross-Entropy loss is used. It means the output of CNNs is a probability over the C classes for each input item.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Softmax Cross-Entropy Loss.png}
+    \caption{Softmax Cross-Entroy Loss}
+\end{figure}
+
+\begin{equation} \label{Softmax Cross-entropy loss (a)}
+    CE = -\sum_{i}^{C}t_{i}log(\frac{e^{s_i}}{\sum_{j}^{C}e^{s_j}})
+\end{equation}
+\myequations{Softmax Cross-entropy Loss function (a)}
+
+As normally, in case of multi-class problems, labels are reprented as one-hot vectors, thus only the class $C_p$ (positive class) keeps its term in the loss. So far, only one element in the target vector is non-zero, $t_i = t_p$. Because $t_j = 0$ when $j \neq i$ and $t_i = 1$ when $i = p$, therefore the equation (\ref{Softmax Cross-entropy loss (a)}) can be written as
+
+\begin{equation} \label{Softmax Cross-entropy loss (b)}
+    CE = -log(\frac{e^{s_p}}{\sum_{j}^{C}e^{s_j}})
+\end{equation}
+\myequations{Softmax Cross-entropy Loss function (b)}
+
+The next step is find out the optimum values for parameters in the network by calculating the gradient of loss function with respect to the output of CNN, then applying the back-propagation algorithm to optimize the loss function. So the gradient of CE loss respect each class score in $s$ needs to be computed. Despite the groundtruth $C_p$, the gradient for other classes are the same, the derivative respect to the $C_p$ class (eq. (\ref{Derivative for positive class C_p})) and other classes (eq. (\ref{Derivative for negative classes})) are defined \citep{cross-entropy,softmax-derivative}:
+
+\begin{equation} \label{Derivative for positive class C_p}
+    \frac{\delta}{\delta s_{p}}(-log(\frac{e^{s_p}}{\sum_{j}^{C}e^{s_j}})) = (\frac{e^{s_p}}{\sum_{j}^{C}e^{s_j}} - 1)
+\end{equation}
+\myequations{Derivative for positive class}
+
+\begin{equation} \label{Derivative for negative classes}
+    \frac{\delta}{\delta s_{n}}(-log(\frac{e^{s_p}}{\sum_{j}^{C}e^{s_j}})) = (\frac{e^{s_n}}{\sum_{j}^{C}e^{s_j}})
+\end{equation}
+\myequations{Derivative for negative classes}
+
+$s_n$ is the score of negative classes differ from $C_p$
+
+\subsubsection{Binary Cross-Entropy loss}
+Instead of using a combiation between Softmax activation and cross-entropy, this loss function is using Sigmoid activation. Therefore it is also called as Sigmoid Cross-entropy. While in Softmax activation a score of an elements depends on all elements, the output with Sigmoid activation are dependently to each others so that the loss estimated value for each output vector component is unaffected by the value of other component elements. This is the reason why Sigmoid Cross-Entropy is used in multi-label classification problems where prediction of an element belonging to a specific class should not affect the judgement for another class.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Binary Cross-entropy.png}
+    \caption{Binary Cross-Entropy Loss}
+    \label{fig. binary CE loss}
+\end{figure}
+
+In this case, an output is evaluated that it is belonging to the class $C_i$ (for all classes $C$) or not, tha's why it is called \textit{"binary"}. The local loss for each class $C_i$ is defined (\ref{Binary Cross-Entropy Loss})
+
+\begin{equation} \label{Binary Cross-Entropy Loss (a)}
+    \begin{split}
+        CE & = -\sum_{i = 1}^{C' = 2} t_{i}log(f(s_i)) \\
+            & = -t_{1}log(f(s_1)) - (1 - t_1)log(1 - f(s_1))
+    \end{split}   
+\end{equation}
+\myequations{Binary Cross-Entropy Loss (a)}
+
+Where $f(s_{i})$ is sigmoid function at (\ref{Sigmoid}). The problem of multi-label classification can be considered as multi \textit{small} binary problems: is the output belonged to the class $C_i$ for every class $C$? Therefore each $C_i$ class, $t_1$ and $s_1$ is the groundtruth and the score of the setup binary problem within the class. It is known that the value of $t_1$ is binary (only 0 or 1, positive or negative) so the equation (\ref{Binary Cross-Entropy Loss (a)}) can re-write as
+
+\begin{equation} \label{Binary Cross-Entropy Loss (b)}
+    f(x) = 
+    \begin{dcases}
+        -log(f(s_{1})) \text{if $t_1 = 1$} \\
+        -log(1 - f(s_1)) \text{if $t_1 = 0$}
+    \end{dcases}
+\end{equation}
+\myequations{Binary Cross-Entropy Loss (b)}
+
+As saying before, by using sigmoid activation, the score of each class is independent with other class, only effect by the loss of binary problem itself. Thus the gradient respect to the score $s_i$ is
+
+\begin{equation} \label{binary cross-entropy gradient}
+    \begin{split}
+        \frac{\delta}{\delta s_i}(CE(f(s_i))) & = t_1(f(s_1) - 1) + (1 - t_1)(f(s_1)) \\
+        & = \begin{dcases}
+            f(s_1) - 1 \text{if $t_1 = 1$} \\
+            f(s_1) \text{if $t_1 = 0$}
+        \end{dcases}
+    \end{split}
+\end{equation}
+
+For the global loss of the model, it is calculated by sum up local loss of each class $C_i$. This is the method which is using to evaluate model in this research
+
 \subsection{Datasets}
 As mentioned above, in this thesis, the two datasets, ASL64 and WLASL, are examined. The group of authors provide both raw and pre-processed videos. To reduce time and complexicity of the project, only pre-processed videos are used for training and testing purposed.
 
@@ -870,6 +880,8 @@ The dataset of WLASL are collected from the internet with two main reliable sour
 At pre-processing step, YOLO 3 networks is employed to train to identify human in a video and as a result, it provices a largest boundary box of person during time frames. After that, the videos are cropped based on the human bounded box from YOLO training. By doing this, the model is only forcus on signer's action and remove unrelated objects in the background, increasing accuracy of the model. They also provide temporal boundary whereas the starting and ending frames of the signs are defined in each video.
 
 Also from the group of authors, the shortest video is around 0.36 seconds and the longest video is 8.12 seconds, with the avarage time of the whole dataset is around 2.41 seconds. The intra-class standard deviation is 0.85 seconds on avarage. At the end, the authors split the dataset into 4 subsets depends on the sorting of sample size for each gloss, and the top K glosses are selected (K is 100, 300, 1000, 2000) \citep{li2020word}.
+
+Because of the limitation of device capacities and time, in the project, I only perform with the top 100 glosses.
 
 \begin{table}[H]
     \centering
@@ -932,9 +944,80 @@ For the initial configuration, the training parameters are setup with:
 \end{itemize}
 
 \subsection{Results}
+As the result, the trained model shows the good result on ASL dataset with RGB-stream and Flow-Stream individually and also with the combination version. During the validation of the model, it is reached 98.59\% and 93.51\% when using I3D with RGB and Flow frames separatedly. The accuracy and loss of training RGB and flow videos are showwed as below.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{Result_ASL_flow_Loss.png}
+        \caption{Model loss with optical flow training    }
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{Result_on_ASL_Flow_Dataset.png}
+        \caption{Model accuracy with optical flow training}
+    \end{subfigure}
+    \caption{Model loss and accuracy with LSA64 dataset}
+    \label{Model training LSA64 dataset, flow-stream}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{result_ASL_rgb_loss.png}
+        \caption{Model loss with RGB training          }
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{Result_ASL_rgb_accuracy.png}
+        \caption{Model accuracy with RGB training}
+    \end{subfigure}
+    \caption{Model loss and accuracy with LSA64 dataset}
+    \label{Model training LSA64 dataset, RGB-stream}
+\end{figure}
+
+On the other hand, WLASL dataset is quite challenge because of its unconstrained environment compared to ASL dataset. The accuracy of the model when examined the WLASL dataset is not as good as with ASL dataset. In details, the RGB accuracy is around 75.58\% and for the flow trained is much lower, around 40.67\% which are figured out as the figure below.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{result_on_wlasl_100_rgb.png}
+        \caption{Model loss with RGB training             }
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{result_on_wlasl_100_rgb_loss.png}
+        \caption{Model accuracy with RGB training}
+    \end{subfigure}
+    \caption{Model loss and accuracy with WLASL-100 dataset}
+    \label{Model training WLASL dataset, RGB-stream}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{result_wlasl_100_flow_acc.png}
+        \caption{Model loss with flow training             }
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{result_wlasl_100_flow_loss.png}
+        \caption{Model accuracy with flow training}
+    \end{subfigure}
+    \caption{Model loss and accuracy with WLASL-100 dataset}
+    \label{Model training WLASL dataset, flow-stream}
+\end{figure}
+
+At the final stage, with the combination of using RGB-stream prediction and flow-stream prediction, the model shows a good result in which the accuracy is increasing compared to individual stream predictions. In details, the validation resuls of ASL and WLASL dataset using the model are 99.02\% and 78.15\% respectively.
+\newpage
 
 \section{Conclusion}
+This research aimed to identify effective of using 2-stream I3D model to understand hand gestures of hearing-impaired community. The result in this study shows that Inflated-3D models are capable to use for SLR. The accuracy when using the model with 2-stream RBG and Flow are good to recognize word-level sign language.
+During the project, I have studied several neural networks which are used to sovle the problem of video classification and the project also helps me realize the important of using technology, especially applying AI and Deep Learning to help community to solve basis problems.
+The word-level recognition of sign language is a very first step of sign language recognition. It has been a long road to obtain the good result in SLR when it is more complicated while using continuous gestures and also face expressions to describe a context, it is not simply word-by-word situation.
+Word-level recognition also has many problems to solve to make the result are more accurate in the real condition. As I observed during the thesis, when the environment, background in the video are complex, such as the light is unconstrained during the capture or having many objects in the background, it is less accurate (comparing the accuracy of ASL dataset and WLASL dataset). 
 
+For the further work, to increase the accuracy of recognizing word of sign language, I suggest that we can extract only the hands shape and combine with position of some anchor points of the body, such as left hand, right hand and head. With this strategy, the model only focus to learn on hand-shape, hand movements and it is not distracted by others unrelated things. Moreover, the problems of lacking data for SLR also need to be considered.
 
 \newpage
 

@@ -1,23 +1,23 @@
-\contentsline {myequations}{\numberline {1}Sigmoid function}{}{equation.5.1}%
-\contentsline {myequations}{\numberline {2}Softmax function}{}{equation.5.2}%
-\contentsline {myequations}{\numberline {3}Cross entropy}{}{equation.5.3}%
-\contentsline {myequations}{\numberline {4}Softmax Cross-entropy Loss function (a)}{}{equation.5.4}%
-\contentsline {myequations}{\numberline {5}Softmax Cross-entropy Loss function (b)}{}{equation.5.5}%
-\contentsline {myequations}{\numberline {6}Derivative for positive class}{}{equation.5.6}%
-\contentsline {myequations}{\numberline {7}Derivative for negative classes}{}{equation.5.7}%
-\contentsline {myequations}{\numberline {8}Binary Cross-Entropy Loss (a)}{}{equation.5.8}%
-\contentsline {myequations}{\numberline {9}Binary Cross-Entropy Loss (b)}{}{equation.5.9}%
-\contentsline {myequations}{\numberline {11}Constant intensity assumption}{}{equation.6.11}%
-\contentsline {myequations}{\numberline {12}Taylor Series Approximation of pixel intensity}{}{equation.6.12}%
-\contentsline {myequations}{\numberline {13}Optical flow equation}{}{equation.6.13}%
-\contentsline {myequations}{\numberline {14}Weighted sum multiplied by the intensity difference for all pixels in a window}{}{equation.6.14}%
-\contentsline {myequations}{\numberline {15}Optical Flow Equation - Lucas - Kanade algorithm}{}{equation.6.15}%
-\contentsline {myequations}{\numberline {16}New optical flow equation: two-unknow-form equation}{}{equation.6.16}%
-\contentsline {myequations}{\numberline {17}Quadratic Polynomial}{}{equation.6.17}%
-\contentsline {myequations}{\numberline {18}New signal $f_{2}$ by global displacement}{}{equation.6.18}%
-\contentsline {myequations}{\numberline {19}Polynomial expansion coefficient 1}{}{equation.6.19}%
-\contentsline {myequations}{\numberline {20}Polynomial expansion coefficient 2}{}{equation.6.20}%
-\contentsline {myequations}{\numberline {21}Polynomial expansion coefficient 3}{}{equation.6.21}%
-\contentsline {myequations}{\numberline {22}The key observation}{}{equation.6.22}%
-\contentsline {myequations}{\numberline {23}Magnitude calculation}{}{equation.6.23}%
-\contentsline {myequations}{\numberline {24}Angle of two 2D vectors}{}{equation.6.24}%
+\contentsline {myequations}{\numberline {1}Constant intensity assumption}{}{equation.5.1}%
+\contentsline {myequations}{\numberline {2}Taylor Series Approximation of pixel intensity}{}{equation.5.2}%
+\contentsline {myequations}{\numberline {3}Optical flow equation}{}{equation.5.3}%
+\contentsline {myequations}{\numberline {4}Weighted sum multiplied by the intensity difference for all pixels in a window}{}{equation.5.4}%
+\contentsline {myequations}{\numberline {5}Optical Flow Equation - Lucas - Kanade algorithm}{}{equation.5.5}%
+\contentsline {myequations}{\numberline {6}New optical flow equation: two-unknow-form equation}{}{equation.5.6}%
+\contentsline {myequations}{\numberline {7}Quadratic Polynomial}{}{equation.5.7}%
+\contentsline {myequations}{\numberline {8}New signal $f_{2}$ by global displacement}{}{equation.5.8}%
+\contentsline {myequations}{\numberline {9}Polynomial expansion coefficient 1}{}{equation.5.9}%
+\contentsline {myequations}{\numberline {10}Polynomial expansion coefficient 2}{}{equation.5.10}%
+\contentsline {myequations}{\numberline {11}Polynomial expansion coefficient 3}{}{equation.5.11}%
+\contentsline {myequations}{\numberline {12}The key observation}{}{equation.5.12}%
+\contentsline {myequations}{\numberline {13}Magnitude calculation}{}{equation.5.13}%
+\contentsline {myequations}{\numberline {14}Angle of two 2D vectors}{}{equation.5.14}%
+\contentsline {myequations}{\numberline {15}Sigmoid function}{}{equation.6.15}%
+\contentsline {myequations}{\numberline {16}Softmax function}{}{equation.6.16}%
+\contentsline {myequations}{\numberline {17}Cross entropy}{}{equation.6.17}%
+\contentsline {myequations}{\numberline {18}Softmax Cross-entropy Loss function (a)}{}{equation.6.18}%
+\contentsline {myequations}{\numberline {19}Softmax Cross-entropy Loss function (b)}{}{equation.6.19}%
+\contentsline {myequations}{\numberline {20}Derivative for positive class}{}{equation.6.20}%
+\contentsline {myequations}{\numberline {21}Derivative for negative classes}{}{equation.6.21}%
+\contentsline {myequations}{\numberline {22}Binary Cross-Entropy Loss (a)}{}{equation.6.22}%
+\contentsline {myequations}{\numberline {23}Binary Cross-Entropy Loss (b)}{}{equation.6.23}%
